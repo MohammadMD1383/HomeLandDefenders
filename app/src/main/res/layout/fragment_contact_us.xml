@@ -1,0 +1,57 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@android:color/white"
+	android:padding="16dp"
+	tools:context="ir.androidDev.homeLandDefenders.fragments.ContactUsFragment">
+	
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical">
+		
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:text="@string/contact_us_string_follow_us" />
+		
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_marginTop="8dp"
+			android:orientation="vertical">
+			
+			<ImageView
+				android:id="@+id/iv_contactUsFragment_telegram"
+				android:layout_width="100dp"
+				android:layout_height="0dp"
+				android:layout_gravity="center_horizontal"
+				android:layout_weight="1"
+				android:clickable="true"
+				android:focusable="true"
+				android:src="@drawable/telegram" />
+			
+			<ImageView
+				android:id="@+id/iv_contactUsFragment_soroush"
+				android:layout_width="100dp"
+				android:layout_height="0dp"
+				android:layout_gravity="center_horizontal"
+				android:layout_weight="1"
+				android:clickable="true"
+				android:focusable="true"
+				android:src="@drawable/soroush" />
+			
+			<ImageView
+				android:id="@+id/iv_contactUsFragment_gap"
+				android:layout_width="100dp"
+				android:layout_height="0dp"
+				android:layout_gravity="center_horizontal"
+				android:layout_weight="1"
+				android:clickable="true"
+				android:focusable="true"
+				android:src="@drawable/gap" />
+		</LinearLayout>
+	</LinearLayout>
+</FrameLayout>

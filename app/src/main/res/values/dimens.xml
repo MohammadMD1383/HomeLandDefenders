@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="zero_dp">0dp</dimen>
+	<dimen name="thumbnail_size">100dp</dimen>
+	<dimen name="operation_thumbnail_size">300dp</dimen>
+</resources>

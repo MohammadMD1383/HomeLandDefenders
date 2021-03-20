@@ -1,0 +1,35 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@android:color/white"
+	android:padding="16dp"
+	tools:context="ir.androidDev.homeLandDefenders.fragments.CommentsFragment">
+	
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical">
+		
+		<EditText
+			android:id="@+id/et_commentsFragment_comment"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_above="@id/btn_commentsFragment_send"
+			android:layout_alignParentTop="true"
+			android:layout_margin="4dp"
+			android:background="@drawable/edit_text_background_gray_200"
+			android:gravity="top|start"
+			android:hint="@string/comments_string_place_holder"
+			android:inputType="textMultiLine"
+			android:padding="8dp"
+			android:scrollbars="vertical" />
+		
+		<Button
+			android:id="@+id/btn_commentsFragment_send"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true"
+			android:text="@string/string_send" />
+	</RelativeLayout>
+</FrameLayout>

@@ -1,0 +1,96 @@
+<resources>
+	<string name="app_name">مدافعان وطن</string>
+	<string name="welcome_text">مقام معظم رهبری:\nامروزه زنده نگه داشتن یاد و خاطره شهدا کمتر از شهادت نیست.</string>
+	<string name="home_page_button_1">زندگی نامه شهدا</string>
+	<string name="home_page_button_2">وصیت نامه شهدا</string>
+	<string name="home_page_button_3">نقشه عملیات ها</string>
+	<string name="home_page_button_4_5">تاریخچه و جزئیات جنگ</string>
+	<string name="home_page_button_6">جانبازان گرانقدر</string>
+	<string name="home_page_button_0">مقدمه</string>
+	<string name="drawer_string_home">صفحه اصلی</string>
+	<string name="drawer_string_settings">تنظیمات</string>
+	<string name="drawer_string_comments">انتقادات و پیشنهادات</string>
+	<string name="drawer_string_add_content">افزودن مطلب</string>
+	<string name="drawer_string_contact_us">ارتباط با ما</string>
+	<string name="drawer_string_about_us">درباره ما</string>
+	<string name="string_introduction">مقدمه</string>
+	<string name="introduction_string_value_the_blood">قدر خون شهدا را بدانیم</string>
+	<string name="biography_string_title">زندگی نامه شهدا</string>
+	<string name="in_the_name_of_allah">بسم الله الرَّحمن الرَّحیم</string>
+	<string name="app_settings_string_title">تنظیمات</string>
+	<string name="biography_string_bottom">مثل شهدا خدا را بشناسیم</string>
+	<string name="testament_string_title">وصیت نامه شهدا</string>
+	<string name="testament_string_bottom">به وصیت شهدا عمل کنیم</string>
+	<string name="operations_string_title">نقشه عملیات ها</string>
+	<string name="operations_string_bottom">ما به شهدا مدیونیم</string>
+	<string name="drawer_string_download_content">دریافت اطلاعات</string>
+	<string name="drawer_string_repair_content">تعمیر اطلاعات</string>
+	<string name="app_settings_string_nick_name">نام مستعار</string>
+	<string name="app_settings_string_font">فونت نرم افزار</string>
+	<string name="app_settings_string_font_size">اندازه قلم</string>
+	<string name="app_settings_string_save">ذخیره</string>
+	<string name="about_us_string_in_the_name_of_god">به نام خدا</string>
+	<string name="veterans_string_title">جانبازان گرانقدر</string>
+	<string name="veterans_string_bottom">ما ملت شهادتیم</string>
+	<string name="contact_us_string_follow_us">ما را در شبکه های اجتماعی دنبال کنید\nآخرین اخبار، راهنمایی ها و به روزرسانی ها را با عضویت در کانال های نرم افزار مدافعان وطن دریافت کنید</string>
+	<string name="string_send">ارسال</string>
+	<string name="comments_string_place_holder">پیشنهاد و یا انتقاد شما…</string>
+	<string name="drawer_string_title_tools">ابزار</string>
+	<string name="drawer_string_share_app">معرفی به دوستان</string>
+	<string name="string_please_connect">لطفا به اینترنت متصل شوید</string>
+	<string name="json_download_volley_fail_string">خطایی در بارگیری اطلاعات رخ داد</string>
+	<string name="download_volley_string_check_connection">بررسی اتصال…</string>
+	<string name="download_volley_string_downloading">دریافت اطلاعات…</string>
+	<string name="save_state_string_saved">ذخیره شد</string>
+	<string name="app_settings_string_please_fill_nick_name">لطفا نام مستعار خود را وارد کنید</string>
+	<string name="util_dialog_positive_button">تایید</string>
+	<string name="util_dialog_negative_button">لغو</string>
+	<string name="app_settings_string_please_choose_nick_name">لطفا یک نام مستعار برای خود انتخاب کنید</string>
+	<string name="app_settings_string_please_restart_app">برای اعمال کامل تنظیمات انجام شده نرم افزار را دوباره اجرا کنید</string>
+	<string name="app_settings_string_auto_pic_download">دانلود خودکار تصاویر</string>
+	<string name="home_page_string_check_status">بررسی وضعیت…</string>
+	<string name="home_page_string_comment_not_possible">اکنون امکان ارسال نظر وجود ندارد</string>
+	<string name="home_page_string_add_content_not_possible">اکنون امکان ارسال مطلب وجود ندارد</string>
+	<string name="home_page_string_error_get_from_server">خطا در بارگذاری</string>
+	<string name="comments_fragment_please_fill_your_comment">لطفا نظر خود را بنویسید</string>
+	<string name="comments_fragment_string_sending">در حال ارسال…</string>
+	<string name="comments_fragment_string_comment_sent">ارسال شد</string>
+	<string name="comments_fragment_string_send_error">خطا در ارسال</string>
+	<string name="send_content_fragment_string_your_text">متن شما…</string>
+	<string name="send_content_fragment_string_please_fill_text">لطفا متن خود را بنویسید</string>
+	<string name="home_page_download_done">بارگیری انجام شد</string>
+	<string name="suggest_string_share_with">اشتراک لینک برنامه با:</string>
+	<string name="suggest_string_share_text">تو هم مثل من نرم افزار مدافعان وطن رو همین الان دانلود کن و با شهدا و نحوه زندگی اون ها آشنا شو! دانلود از:\n</string>
+	<string name="biography_adapter_age">سن: </string>
+	<string name="biography_string_dead_body_not_found">مفقودالاثر</string>
+	
+	<!-- drawer strings -->
+	<string name="action_bar_drawer_toggle_open">open drawer</string>
+	<string name="action_bar_drawer_toggle_close">close drawer</string>
+	
+	<!-- string arrays -->
+	<string-array name="font_names">
+		<item>ایران سنس</item>
+		<item>یکان</item>
+		<item>رویا</item>
+		<item>کودک</item>
+		<item>نازنین</item>
+	</string-array>
+	
+	<string-array name="font_sizes">
+		<item>14</item>
+		<item>16</item>
+		<item>18</item>
+		<item>20</item>
+		<item>22</item>
+		<item>24</item>
+	</string-array>
+	
+	<!-- long texts -->
+	<string name="introduction_full_text">عزیزانی را از دست داده ایم، که بخاطر ما شهید شدند.\nگل هایی پرپر شدند، تا گل هایی به مدرسه بروند.\nوارد جنگی شده بودیم که تقصیر ما نبود.\nلحظه ای فکرکنیم که…\nهیچ کسی به جبهه نمیرفت و در خانه اش کنار خانواده اش نشسته بود.\nفکر کنیم…\nازمدافع وطن شهید کاوه گرفته تا مدافع حرم شهید سنجرانی…\nو از جانبازان مدافع وطن و مدافع حرم گرفته تا پرستاران و دکتران و شهیدان مدافع سلامت که اکنون آنها در جبهه مقاومت قرار گرفته اند؛ برای چه جانشان را در خطر قرار دادند؟\nتا ایران و ایرانی بماند…\nدلایلی چون ناموسشان، که مورد تعرض قرار نگیرد…\nچون خانواده اش از ویروس خطرناک آزرده نشود، دوری را تحمل میکند و کارش را به نحو احسنت انجام میدهد؛ ولی هدف اصلی بودن کشوری به نام ایران است.\nما این نرم افزار را درست کردیم بخاطر اینکه شهیدان از یادها بیرون نروند.\nدر حوزه کاری خود همین از دستمان بر می آمد که دریغ نکردیم.\nبه فرموده رهبر معظم انقلاب اسلامی:\n«امروزه زنده نگه داشتن یاد و خاطره شهدا کمتر از شهادت نیست»\nاین کار را انجام دادیم و ادامه خواهیم داد.\nهرچه که این کار ما کار بزرگی نیست، و از درجه شهدا تا شهید نشویم بهره مند نخواهیم شد.\nپس دعا میکنیم که ان شاءلله به درجه شهادت نائل شویم.\n\nگروه زینبیون\nمهرماه 1399</string>
+	<string name="about_us_full_text">گروه زینبیون متشکل از بچه های دبیرستانی مشهد است که این نرم افزار سرآغاز یک مسیر طولانی برای آنان است.\nنرم افزار مدافعان وطن درباره هر شخصی است که برای ایران و ایرانی ایثار و فداکاری کرده است، برای شهدای جنگ تحمیلی، برای مدافعان حرم و مدافعان سلامت.\nالبته نقص ها و ایراداتی هم بر این نرم افزار وارد است؛ که به یاری خدا و با نظرات و پیشنهادات شما عزیزان و همچنین با پشتکار گروه زینبیون رفع خواهد شد.\nاین نرم افزار کاملا مردمی است و متعلق به هیچ نهاد یا سازمانی نمی باشد.\nامیدواریم که عمه سادات و خاندان پاک و مطهرشان به ما نظری کنند.\n\nگروه زینبیون\nمهرماه 1399\n</string>
+	<string name="veterans_full_text">در بین مردم عزیزانی هستند که به لقب شهید زنده آنها را میشناسیم.\n\nمگر میشود فراموششان کرد؟\n\nآنهایی که رفقای خود را پر پر دیدند.\nآنهایی که هر روز صحنه جنگ برایشان تداعی میشود.\nجانباز شدند و حسرتی دارند آشکار\n\nما به شهیدان زنده هم مدیونیم و از آنها تشکر و قدر دانی میکنیم</string>
+	<string name="sure_to_repair_content">با انجام این عمل تمام متن های بارگیری شده پاک، و مجددا بارگیری خواهند شد.\nدقت داشته باشید که عکس های بارگیری شده پاک نخواهند شد و نیازی به بارگیری مجدد آنها نخواهد بود.\nاز ادامه کار مطمئن هستید؟</string>
+	<string name="sure_to_download_content">با انجام این عمل ابتدا وجود متون جدید بررسی شده و سپس در صورت وجود داشتن بارگیری خواهند شد.\nدقت داشته باشید که در صورتی که بعد از انجام این عمل هیچ متن جدیدی برای شما اضافه نشد بدین معناست که متن جدیدی وجود نداشته است.\nدر انجام این عملیات هیچ تصویری بارگیری نخواهد شد.\nآیا مایل به ادامه هستید؟</string>
+	<string name="font_warning">*** توجه ***\nدر این نرم افزار به غیر از فونت ایران سنس بقیه فونت ها رایگان است.\nدقت داشته باشید که برای استفاده شخصی خودتان از این فونت حتما باید آن را از سایت fontiran.com متناسب با نیازتان خریداری کنید.\nهرگونه کپی برداری یا استفاده از فونت ایران سنس که در این نرم افزار استفاده شده شرعا و قانونا حرام است.</string>
+</resources>

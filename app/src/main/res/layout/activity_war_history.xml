@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context="ir.androidDev.homeLandDefenders.WarHistoryActivity">
+	
+	<com.google.android.material.appbar.AppBarLayout
+		android:id="@+id/apb_warHistoryPageActivity_appBarLayout"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+		
+		<androidx.appcompat.widget.Toolbar
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:layout_scrollFlags="enterAlways|scroll">
+			
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginEnd="16dp">
+				
+				<ImageView
+					android:id="@+id/iv_warHistoryActivity_back"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignParentStart="true"
+					android:layout_centerVertical="true"
+					android:clickable="true"
+					android:focusable="true"
+					android:foreground="?attr/selectableItemBackground"
+					android:padding="4dp"
+					app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
+				
+				<TextView
+					android:id="@+id/tv_warHistoryActivity_titleTv"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_centerVertical="true"
+					android:layout_marginStart="8dp"
+					android:layout_marginEnd="8dp"
+					android:layout_toStartOf="@id/iv_warHistoryActivity_loadState"
+					android:layout_toEndOf="@id/iv_warHistoryActivity_back"
+					android:ellipsize="marquee"
+					android:marqueeRepeatLimit="marquee_forever"
+					android:singleLine="true"
+					android:text="@string/home_page_button_4_5"
+					android:textColor="@android:color/white"
+					android:textSize="20sp" />
+				
+				<ImageView
+					android:id="@+id/iv_warHistoryActivity_loadState"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignParentEnd="true"
+					android:layout_centerVertical="true"
+					android:clickable="true"
+					android:focusable="true"
+					android:foreground="?attr/selectableItemBackground"
+					android:padding="4dp"
+					app:srcCompat="@drawable/ic_baseline_remove_red_eye_24" />
+			</RelativeLayout>
+		</androidx.appcompat.widget.Toolbar>
+	</com.google.android.material.appbar.AppBarLayout>
+	
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior">
+		
+		<androidx.core.widget.NestedScrollView
+			android:id="@+id/nsv_warHistoryActivity_mainContainer"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+			
+			<androidx.recyclerview.widget.RecyclerView
+				android:id="@+id/rv_warHistoryActivity_recyclerView"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" />
+		</androidx.core.widget.NestedScrollView>
+		
+		<ProgressBar
+			android:id="@+id/prb_warHistoryActivity_progressBar"
+			android:layout_width="75dp"
+			android:layout_height="75dp"
+			android:layout_gravity="center" />
+		
+		<ImageView
+			android:id="@+id/iv_warHistoryActivity_refresh"
+			android:layout_width="75dp"
+			android:layout_height="75dp"
+			android:layout_gravity="center"
+			android:clickable="true"
+			android:focusable="true"
+			android:foreground="?attr/selectableItemBackground"
+			android:visibility="gone"
+			app:srcCompat="@drawable/ic_baseline_refresh_24" />
+	</FrameLayout>
+	
+	<com.google.android.material.floatingactionbutton.FloatingActionButton
+		android:id="@+id/fab_warHistoryActivity_saveState"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="bottom|end"
+		android:layout_marginEnd="8dp"
+		android:layout_marginBottom="8dp"
+		android:clickable="true"
+		android:focusable="true"
+		app:srcCompat="@drawable/ic_baseline_remove_red_eye_24" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

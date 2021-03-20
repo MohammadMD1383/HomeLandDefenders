@@ -1,0 +1,34 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@android:color/white"
+	tools:context="ir.androidDev.homeLandDefenders.fragments.SendContentFragment">
+	
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_margin="16dp">
+		
+		<EditText
+			android:id="@+id/et_sendContentFragment_content"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_above="@id/btn_sendContentFragment_send"
+			android:layout_alignParentTop="true"
+			android:layout_margin="4dp"
+			android:background="@drawable/edit_text_background_gray_200"
+			android:gravity="top|start"
+			android:hint="@string/send_content_fragment_string_your_text"
+			android:inputType="textMultiLine"
+			android:padding="8dp"
+			android:scrollbars="vertical" />
+		
+		<Button
+			android:id="@+id/btn_sendContentFragment_send"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true"
+			android:text="@string/string_send" />
+	</RelativeLayout>
+</FrameLayout>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- Main Colors -->
+	<color name="colorPrimary">@color/iran_green</color>
+	<color name="colorPrimaryDark">#068C37</color>
+	<color name="colorAccent">#009688</color>
+	
+	<!-- HomePage Button Colors -->
+	<color name="button0">#009688</color> <!-- 500 -->
+	<color name="button0_alpha">#cc009688</color> <!-- 500 - alpha -->
+	
+	<color name="button1">#8BC34A</color> <!-- 500 -->
+	<color name="button1_alpha">#cc8BC34A</color> <!-- 500 - alpha -->
+	
+	<color name="button2">#CDDC39</color> <!-- 500 -->
+	<color name="button2_alpha">#ccCDDC39</color> <!-- 500 - alpha -->
+	
+	<color name="button3">#7CB342</color> <!-- 600 -->
+	<color name="button3_alpha">#cc7CB342</color> <!-- 600 - alpha -->
+	
+	<color name="button4">#C0CA33</color> <!-- 600 -->
+	<color name="button4_alpha">#ccC0CA33</color> <!-- 600 - alpha -->
+	
+	<color name="button5">#689F38</color> <!-- 700 -->
+	<color name="button5_alpha">#cc689F38</color> <!-- 700 - alpha -->
+	
+	<color name="button6">#AFB42B</color> <!-- 700 -->
+	<color name="button6_alpha">#ccAFB42B</color> <!-- 700 - alpha -->
+	
+	<!-- Others -->
+	<color name="nvg_drawer_bgc">#011F42</color>
+	<color name="nvg_drawer_item_bgc">#4DFFFFFF</color>
+	
+	<!-- Flag Colors -->
+	<color name="iran_green">#07AA42</color>
+	<color name="iran_red">#F60606</color>
+	
+	<!-- Material Colors -->
+	<color name="material_gray_200">#EEEEEE</color>
+	<color name="material_gray_300">#E0E0E0</color>
+	<color name="material_gray_500">#9E9E9E</color>
+</resources>

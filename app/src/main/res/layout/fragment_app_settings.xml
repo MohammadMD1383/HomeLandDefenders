@@ -1,0 +1,108 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@android:color/white"
+	android:padding="16dp"
+	tools:context="ir.androidDev.homeLandDefenders.fragments.AppSettingsFragment">
+	
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+		
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+			
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_horizontal"
+				android:text="@string/app_settings_string_nick_name" />
+			
+			<EditText
+				android:id="@+id/editTextTextPersonName"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:background="@drawable/edit_text_background_gray_200"
+				android:gravity="center"
+				android:hint="@string/app_settings_string_nick_name"
+				android:inputType="textPersonName"
+				android:maxLength="30"
+				android:padding="8dp" />
+			
+			<include layout="@layout/separator_horizontal" />
+			
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_horizontal"
+				android:orientation="horizontal">
+				
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_vertical"
+					android:layout_marginEnd="8dp"
+					android:text="@string/app_settings_string_font" />
+				
+				<androidx.appcompat.widget.AppCompatSpinner
+					android:id="@+id/spin_appSettingsFragment_fontSpinner"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_vertical" />
+			</LinearLayout>
+			
+			<include layout="@layout/separator_horizontal" />
+			
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_horizontal"
+				android:orientation="horizontal">
+				
+				<TextView
+					
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_vertical"
+					android:layout_marginEnd="8dp"
+					android:text="@string/app_settings_string_font_size" />
+				
+				<androidx.appcompat.widget.AppCompatSpinner
+					android:id="@+id/spin_appSettingsFragment_fontSizeSpinner"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_vertical" />
+			</LinearLayout>
+			
+			<include layout="@layout/separator_horizontal" />
+			
+			<androidx.appcompat.widget.SwitchCompat
+				android:id="@+id/sch_appSettingsFragment_autoDownload"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:checked="true"
+				android:text="@string/app_settings_string_auto_pic_download" />
+			
+			<include layout="@layout/separator_horizontal" />
+			
+			<Button
+				android:id="@+id/btn_appSettingsFragment_save"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_horizontal"
+				android:text="@string/app_settings_string_save" />
+			
+			<include layout="@layout/separator_horizontal" />
+			
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/font_warning"
+				android:textColor="@color/material_gray_500" />
+		</LinearLayout>
+	</ScrollView>
+</FrameLayout>

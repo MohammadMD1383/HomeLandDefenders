@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<group android:checkableBehavior="single">
+		<item
+			android:id="@+id/item_nvg_drawer_home"
+			android:checked="true"
+			android:icon="@drawable/ic_baseline_home_24"
+			android:title="@string/drawer_string_home" />
+		<item
+			android:id="@+id/item_nvg_drawer_settings"
+			android:icon="@drawable/ic_baseline_settings_24"
+			android:title="@string/drawer_string_settings" />
+		<item
+			android:id="@+id/item_nvg_drawer_comments"
+			android:icon="@drawable/ic_baseline_comment_24"
+			android:title="@string/drawer_string_comments" />
+		<item
+			android:id="@+id/item_nvg_drawer_addContent"
+			android:icon="@drawable/ic_baseline_post_add_24"
+			android:title="@string/drawer_string_add_content" />
+		<item
+			android:id="@+id/item_nvg_drawer_contactUs"
+			android:icon="@drawable/ic_baseline_contact_mail_24"
+			android:title="@string/drawer_string_contact_us" />
+		<item
+			android:id="@+id/item_nvg_drawer_aboutUs"
+			android:icon="@drawable/ic_baseline_info_24"
+			android:title="@string/drawer_string_about_us" />
+	</group>
+	
+	<item
+		android:id="@+id/group_nvg_drawer_tools"
+		android:title="@string/drawer_string_title_tools">
+		<menu>
+			<item
+				android:id="@+id/item_nvg_drawer_suggest"
+				android:icon="@drawable/ic_baseline_share_24"
+				android:title="@string/drawer_string_share_app" />
+			<item
+				android:id="@+id/item_nvg_drawer_downloadContent"
+				android:icon="@drawable/ic_baseline_cloud_download_24"
+				android:title="@string/drawer_string_download_content" />
+			<item
+				android:id="@+id/item_nvg_drawer_repairContent"
+				android:icon="@drawable/ic_baseline_build_24"
+				android:title="@string/drawer_string_repair_content" />
+		</menu>
+	</item>
+</menu>

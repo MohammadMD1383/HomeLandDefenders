@@ -1,0 +1,97 @@
+<resources>
+	<!-- Base application theme. -->
+	<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+		<!-- Customize your theme here. -->
+		<item name="colorPrimary">@color/colorPrimary</item>
+		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+		<item name="colorAccent">@color/colorAccent</item>
+		
+		<!-- Font Styles -->
+		<item name="android:textColor">@android:color/black</item>
+		<item name="android:fontFamily">@font/iran_sans</item>
+		<item name="android:textSize">16sp</item>
+	</style>
+	
+	<!-- Full Screen Style -->
+	<style name="MainActivity" parent="Theme.AppCompat.Light.NoActionBar">
+		<!-- Font Styles -->
+		<item name="android:textColor">@android:color/black</item>
+		<item name="android:fontFamily">@font/iran_sans</item>
+		
+		<!-- Full Screen -->
+		<item name="android:windowNoTitle">true</item>
+		<item name="android:windowActionBar">false</item>
+		<item name="android:windowFullscreen">true</item>
+		<item name="android:windowContentOverlay">@null</item>
+	</style>
+	
+	<!-- Item Overlay in NvgDrawer -->
+	<style name="ThemeOverlay.AppCompat.navTheme">
+		<!-- Color of text and icon when SELECTED -->
+		<item name="colorPrimary">@android:color/white</item>
+		
+		<!-- Background color when SELECTED -->
+		<item name="colorControlHighlight">@color/nvg_drawer_item_bgc</item>
+		
+		<!-- divider color -->
+		<item name="android:listDivider">@android:color/white</item>
+		
+		<!-- text size -->
+		<item name="android:textSize">16sp</item>
+	</style>
+	
+	<!-- Drawer Group Text Color Style -->
+	<style name="GroupTitleTextAppearance">
+		<item name="android:textColor">@android:color/white</item>
+		
+		<!-- text size -->
+		<item name="android:textSize">16sp</item>
+	</style>
+	
+	<!-- app settings styles -->
+	<!-- font sizes -->
+	<style name="AppTheme.fontSize14">
+		<item name="android:textSize">14sp</item>
+	</style>
+	
+	<style name="AppTheme.fontSize16">
+		<item name="android:textSize">16sp</item>
+	</style>
+	
+	<style name="AppTheme.fontSize18">
+		<item name="android:textSize">18sp</item>
+	</style>
+	
+	<style name="AppTheme.fontSize20">
+		<item name="android:textSize">20sp</item>
+	</style>
+	
+	<style name="AppTheme.fontSize22">
+		<item name="android:textSize">22sp</item>
+	</style>
+	
+	<style name="AppTheme.fontSize24">
+		<item name="android:textSize">24sp</item>
+	</style>
+	
+	<!-- font families -->
+	<style name="AppTheme.FontFamily_iran_sans">
+		<item name="fontFamily">@font/iran_sans</item>
+	</style>
+	
+	<style name="AppTheme.FontFamily_yekan">
+		<item name="fontFamily">@font/yekan</item>
+	</style>
+	
+	<style name="AppTheme.FontFamily_roya">
+		<item name="fontFamily">@font/roya</item>
+	</style>
+	
+	<style name="AppTheme.FontFamily_koodak">
+		<item name="fontFamily">@font/koodak</item>
+	</style>
+	
+	<style name="AppTheme.FontFamily_nazanin">
+		<item name="fontFamily">@font/nazanin</item>
+	</style>
+</resources>
