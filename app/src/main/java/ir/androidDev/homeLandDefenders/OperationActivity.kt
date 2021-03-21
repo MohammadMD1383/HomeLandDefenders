@@ -11,10 +11,13 @@ import androidx.recyclerview.widget.RecyclerView
 import ir.androidDev.homeLandDefenders.adapters.OperationItemAdapter
 import ir.androidDev.homeLandDefenders.dataModels.OperationItem
 import ir.androidDev.homeLandDefenders.database.Database
+import ir.androidDev.homeLandDefenders.databinding.ActivityOperationsBinding
 import ir.androidDev.homeLandDefenders.pages.OperationPageActivity
-import kotlinx.android.synthetic.main.activity_operations.*
 
 class OperationActivity : CustomizableActivity() {
+	
+	/* view binding */
+	private lateinit var binding: ActivityOperationsBinding
 	
 	/* items list */
 	private val operationItems: MutableList<OperationItem> = ArrayList()
@@ -39,29 +42,31 @@ class OperationActivity : CustomizableActivity() {
 		window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
 		
 		super.onCreate(savedInstanceState)
-		setContentView(R.layout.activity_operations)
+		binding = ActivityOperationsBinding.inflate(layoutInflater)
+		val view = binding.root
+		setContentView(view)
 		
 		/* make the title marquee */
-		tv_operationsActivity_titleTv.isSelected = true
+		binding.tvOperationsActivityTitleTv.isSelected = true
 		
 		/* back to home button */
-		iv_operationsActivity_back.setOnClickListener { finish() }
+		binding.ivOperationsActivityBack.setOnClickListener { finish() }
 		
 		/* open search view */
-		sv_operationsActivity_searchView.setOnSearchClickListener {
-			tv_operationsActivity_titleTv.visibility = View.GONE
-			iv_operationsActivity_back.visibility = View.GONE
+		binding.svOperationsActivitySearchView.setOnSearchClickListener {
+			binding.tvOperationsActivityTitleTv.visibility = View.GONE
+			binding.ivOperationsActivityBack.visibility = View.GONE
 		}
 		
 		/* close search view */
-		sv_operationsActivity_searchView.setOnCloseListener {
-			tv_operationsActivity_titleTv.visibility = View.VISIBLE
-			iv_operationsActivity_back.visibility = View.VISIBLE
+		binding.svOperationsActivitySearchView.setOnCloseListener {
+			binding.tvOperationsActivityTitleTv.visibility = View.VISIBLE
+			binding.ivOperationsActivityBack.visibility = View.VISIBLE
 			return@setOnCloseListener false
 		}
 		
 		/* apply search filters */
-		sv_operationsActivity_searchView.setOnQueryTextListener(object :
+		binding.svOperationsActivitySearchView.setOnQueryTextListener(object :
 			SearchView.OnQueryTextListener {
 			override fun onQueryTextSubmit(query: String?): Boolean {
 				adapter!!.filter(query)
@@ -82,10 +87,10 @@ class OperationActivity : CustomizableActivity() {
 		
 		/* check if there is a saved state to load */
 		val cursor = database.getRowBy(Database.TBL_SCROLL, "name", Database.TBL_OPERATION)
-		if (cursor.getIntOrNull(1) == null) fab_operationsActivity_loadState.hide()
+		if (cursor.getIntOrNull(1) == null) binding.fabOperationsActivityLoadState.hide()
 		
 		/* load last saved state */
-		fab_operationsActivity_loadState.setOnClickListener {
+		binding.fabOperationsActivityLoadState.setOnClickListener {
 			startActivity(
 				Intent(this, OperationPageActivity::class.java)
 					.putExtra(BIO_ID, cursor.getInt(1))
@@ -102,8 +107,7 @@ class OperationActivity : CustomizableActivity() {
 	 * fixes the color of icons and texts in search view
 	 */
 	private fun searchViewColorFix() {
-		val sac: SearchView.SearchAutoComplete =
-			sv_operationsActivity_searchView.findViewById(androidx.appcompat.R.id.search_src_text)
+		val sac: SearchView.SearchAutoComplete = binding.svOperationsActivitySearchView.findViewById(androidx.appcompat.R.id.search_src_text)
 		sac.setHintTextColor(Color.WHITE)
 		sac.setTextColor(Color.WHITE)
 	}
@@ -132,23 +136,22 @@ class OperationActivity : CustomizableActivity() {
 	 * setups the recycler view
 	 */
 	private fun setupRecyclerView() {
-		rv_operationsActivity_recyclerView.layoutManager =
-			LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+		binding.rvOperationsActivityRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 		
 		adapter = OperationItemAdapter(this, operationItems, autoDownload!!) {
 			startActivity(Intent(this, OperationPageActivity::class.java).putExtra(BIO_ID, it))
 			finish()
 		}
-		rv_operationsActivity_recyclerView.adapter = adapter
+		binding.rvOperationsActivityRecyclerView.adapter = adapter
 		
 		/* check if fab is available */
-		if (fab_operationsActivity_loadState.isOrWillBeHidden) return
+		if (binding.fabOperationsActivityLoadState.isOrWillBeHidden) return
 		
 		/* hide/show floating action button by scroll */
-		rv_operationsActivity_recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+		binding.rvOperationsActivityRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 			override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
 				super.onScrolled(recyclerView, dx, dy)
-				fab_operationsActivity_loadState.let { if (dy > 0) it.hide() else it.show() }
+				binding.fabOperationsActivityLoadState.let { if (dy > 0) it.hide() else it.show() }
 			}
 		})
 	}

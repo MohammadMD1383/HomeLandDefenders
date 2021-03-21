@@ -2,7 +2,6 @@ package ir.androidDev.homeLandDefenders.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -14,7 +13,7 @@ import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import ir.androidDev.homeLandDefenders.R
 import ir.androidDev.homeLandDefenders.dataModels.OperationItem
-import kotlinx.android.synthetic.main.recycler_item_operation_card.view.*
+import ir.androidDev.homeLandDefenders.databinding.RecyclerItemOperationCardBinding
 
 class OperationItemAdapter(
 	private val context: Context,
@@ -32,20 +31,17 @@ class OperationItemAdapter(
 	}
 	
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-		return ViewHolder(
-			LayoutInflater.from(parent.context)
-				.inflate(R.layout.recycler_item_operation_card, parent, false)
-		)
+		return ViewHolder(RecyclerItemOperationCardBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 	}
 	
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 		val operationItem = operationItems[position]
 		
 		/* on item click handling */
-		holder.view!!.setOnClickListener { onViewClick(operationItem.id!!) }
+		holder.view.setOnClickListener { onViewClick(operationItem.id!!) }
 		
 		/* other views */
-		holder.name!!.text = operationItem.name
+		holder.name.text = operationItem.name
 		
 		/* generate image placeholder */
 		val placeholder = ResourcesCompat.getDrawable(context.resources, R.drawable.ic_baseline_photo_24, null)!!
@@ -82,15 +78,15 @@ class OperationItemAdapter(
 		notifyDataSetChanged()
 	}
 	
-	class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-		var view: CardView? = null
-		var photo: ImageView? = null
-		var name: TextView? = null
+	class ViewHolder(itemView: RecyclerItemOperationCardBinding) : RecyclerView.ViewHolder(itemView.root) {
+		val view: CardView
+		val photo: ImageView
+		val name: TextView
 		
 		init {
-			view = itemView.crd_recyclerItemOperationCard_cardView
-			photo = itemView.iv_recyclerItemOperationCard_photo
-			name = itemView.tv_recyclerItemOperationCard_name
+			view = itemView.crdRecyclerItemOperationCardCardView
+			photo = itemView.ivRecyclerItemOperationCardPhoto
+			name = itemView.tvRecyclerItemOperationCardName
 		}
 	}
 }

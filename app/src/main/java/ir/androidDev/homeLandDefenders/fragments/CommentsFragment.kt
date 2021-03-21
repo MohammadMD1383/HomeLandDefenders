@@ -14,25 +14,22 @@ import ir.androidDev.homeLandDefenders.R
 import ir.androidDev.homeLandDefenders.connections.Url
 import ir.androidDev.homeLandDefenders.contentManagement.ContentManager
 import ir.androidDev.homeLandDefenders.database.Database
+import ir.androidDev.homeLandDefenders.databinding.FragmentCommentsBinding
 import ir.androidDev.homeLandDefenders.utility.Util
-import kotlinx.android.synthetic.main.fragment_comments.*
-import kotlinx.android.synthetic.main.fragment_comments.view.*
 
 class CommentsFragment : Fragment() {
 	
-	private var rootView: View? = null
+	/* view binding */
+	private var binding: FragmentCommentsBinding? = null
 	
-	override fun onCreateView(
-		inflater: LayoutInflater, container: ViewGroup?,
-		savedInstanceState: Bundle?
-	): View? {
-		if (rootView == null) {
-			rootView = inflater.inflate(R.layout.fragment_comments, container, false)
+	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+		if (binding == null) {
+			binding = FragmentCommentsBinding.inflate(inflater, container, false)
 			
 			/* set on send click listener */
 			setOnSendClickListener()
 		}
-		return rootView
+		return binding!!.root
 	}
 	
 	/**
@@ -41,8 +38,8 @@ class CommentsFragment : Fragment() {
 	 * then makes request and send it
 	 */
 	private fun setOnSendClickListener() {
-		rootView!!.btn_commentsFragment_send.setOnClickListener {
-			if (et_commentsFragment_comment.text.trim().isEmpty()) {
+		binding!!.btnCommentsFragmentSend.setOnClickListener {
+			if (binding!!.etCommentsFragmentComment.text.trim().isEmpty()) {
 				Toast.makeText(context, getString(R.string.comments_fragment_please_fill_your_comment), Toast.LENGTH_SHORT).show()
 				return@setOnClickListener
 			}
@@ -59,7 +56,7 @@ class CommentsFragment : Fragment() {
 			val request = object : StringRequest(Method.POST, Url.COMMENT, {
 				d.dismiss()
 				Toast.makeText(context, getString(R.string.comments_fragment_string_comment_sent), Toast.LENGTH_SHORT).show()
-				et_commentsFragment_comment.setText("")
+				binding!!.etCommentsFragmentComment.setText("")
 			}, {
 				d.dismiss()
 				Toast.makeText(context!!, getString(R.string.comments_fragment_string_send_error), Toast.LENGTH_SHORT).show()
@@ -94,8 +91,13 @@ class CommentsFragment : Fragment() {
 		val map: MutableMap<String, String> = HashMap()
 		
 		map["user"] = userName
-		map["comment"] = rootView!!.et_commentsFragment_comment.text.toString().trim()
+		map["comment"] = binding!!.etCommentsFragmentComment.text.toString().trim()
 		
 		return map
+	}
+	
+	override fun onDestroyView() {
+		super.onDestroyView()
+		binding = null
 	}
 }

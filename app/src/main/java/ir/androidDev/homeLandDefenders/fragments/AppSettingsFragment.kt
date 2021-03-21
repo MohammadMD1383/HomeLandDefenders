@@ -10,22 +10,18 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import ir.androidDev.homeLandDefenders.R
 import ir.androidDev.homeLandDefenders.database.Database
+import ir.androidDev.homeLandDefenders.databinding.FragmentAppSettingsBinding
 import ir.androidDev.homeLandDefenders.utility.Util
-import kotlinx.android.synthetic.main.fragment_app_settings.*
-import kotlinx.android.synthetic.main.fragment_app_settings.view.*
 import kotlin.system.exitProcess
 
 class AppSettingsFragment : Fragment() {
 	
-	/* the whole view of fragment */
-	private var rootView: View? = null
+	/* view binding */
+	private var binding: FragmentAppSettingsBinding? = null
 	
-	override fun onCreateView(
-		inflater: LayoutInflater, container: ViewGroup?,
-		savedInstanceState: Bundle?
-	): View? {
-		if (rootView == null) {
-			rootView = inflater.inflate(R.layout.fragment_app_settings, container, false)
+	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+		if (binding == null) {
+			binding = FragmentAppSettingsBinding.inflate(inflater, container, false)
 			
 			/* database */
 			val database = Database(activity!!.applicationContext)
@@ -40,14 +36,14 @@ class AppSettingsFragment : Fragment() {
 			/* on save click listener */
 			setOnSaveClickListener(database)
 		}
-		return rootView
+		return binding!!.root
 	}
 	
 	/**
 	 * setups the spinner for app's font family
 	 */
 	private fun setupFontSpinner() {
-		rootView!!.spin_appSettingsFragment_fontSpinner.adapter = ArrayAdapter(
+		binding!!.spinAppSettingsFragmentFontSpinner.adapter = ArrayAdapter(
 			activity!!.applicationContext,
 			R.layout.spinner_layout,
 			R.id.tv_spinnerLayout_textView,
@@ -59,7 +55,7 @@ class AppSettingsFragment : Fragment() {
 	 * setups the spinner for app's font size
 	 */
 	private fun setupFontSizesSpinner() {
-		rootView!!.spin_appSettingsFragment_fontSizeSpinner.adapter = ArrayAdapter(
+		binding!!.spinAppSettingsFragmentFontSizeSpinner.adapter = ArrayAdapter(
 			activity!!.applicationContext,
 			R.layout.spinner_layout,
 			R.id.tv_spinnerLayout_textView,
@@ -72,14 +68,14 @@ class AppSettingsFragment : Fragment() {
 	 */
 	private fun loadSettings(db: Database) {
 		val cursor1 = db.getRowBy(Database.TBL_SETTINGS, "name", "nick_name")
-		rootView!!.editTextTextPersonName.setText(cursor1.getString(1))
+		binding!!.editTextTextPersonName.setText(cursor1.getString(1))
 		
 		val cursor2 = db.getRowBy(Database.TBL_SETTINGS, "name", "font_family")
 		val cursor3 = db.getRowBy(Database.TBL_SETTINGS, "name", "font_size")
 		
 		val fontFamilies = resources.getStringArray(R.array.font_names)
 		
-		rootView!!.spin_appSettingsFragment_fontSpinner.setSelection(
+		binding!!.spinAppSettingsFragmentFontSpinner.setSelection(
 			when (cursor2.getString(1)) {
 				fontFamilies[0] -> 0
 				fontFamilies[1] -> 1
@@ -92,7 +88,7 @@ class AppSettingsFragment : Fragment() {
 		
 		val fontSizes = resources.getStringArray(R.array.font_sizes)
 		
-		rootView!!.spin_appSettingsFragment_fontSizeSpinner.setSelection(
+		binding!!.spinAppSettingsFragmentFontSizeSpinner.setSelection(
 			when (cursor3.getString(1)) {
 				fontSizes[0] -> 0
 				fontSizes[1] -> 1
@@ -107,7 +103,7 @@ class AppSettingsFragment : Fragment() {
 		val cursor4 = db.getRowBy(Database.TBL_SETTINGS, "name", "auto_download")
 		
 		if (cursor4.getInt(1) == 0) {
-			rootView!!.sch_appSettingsFragment_autoDownload.isChecked = false
+			binding!!.schAppSettingsFragmentAutoDownload.isChecked = false
 		}
 	}
 	
@@ -115,10 +111,9 @@ class AppSettingsFragment : Fragment() {
 	 * sets the action of save button
 	 */
 	private fun setOnSaveClickListener(db: Database) {
-		rootView!!.btn_appSettingsFragment_save.setOnClickListener {
-			if (editTextTextPersonName.text.trim().isEmpty()) {
-				Toast.makeText(activity!!.applicationContext, getString(R.string.app_settings_string_please_fill_nick_name), Toast.LENGTH_SHORT)
-					.show()
+		binding!!.btnAppSettingsFragmentSave.setOnClickListener {
+			if (binding!!.editTextTextPersonName.text.trim().isEmpty()) {
+				Toast.makeText(activity!!.applicationContext, getString(R.string.app_settings_string_please_fill_nick_name), Toast.LENGTH_SHORT).show()
 				return@setOnClickListener
 			}
 			
@@ -127,10 +122,10 @@ class AppSettingsFragment : Fragment() {
 			val cv3 = ContentValues()
 			val cv4 = ContentValues()
 			
-			cv1.put("value", editTextTextPersonName.text.toString())
-			cv2.put("value", spin_appSettingsFragment_fontSpinner.selectedItem.toString())
-			cv3.put("value", spin_appSettingsFragment_fontSizeSpinner.selectedItem.toString())
-			cv4.put("value", sch_appSettingsFragment_autoDownload.isChecked.let { if (it) 1 else 0 })
+			cv1.put("value", binding!!.editTextTextPersonName.text.toString())
+			cv2.put("value", binding!!.spinAppSettingsFragmentFontSpinner.selectedItem.toString())
+			cv3.put("value", binding!!.spinAppSettingsFragmentFontSizeSpinner.selectedItem.toString())
+			cv4.put("value", binding!!.schAppSettingsFragmentAutoDownload.isChecked.let { if (it) 1 else 0 })
 			
 			db.updateBy(Database.TBL_SETTINGS, cv1, "name", "nick_name")
 			db.updateBy(Database.TBL_SETTINGS, cv2, "name", "font_family")
@@ -143,5 +138,10 @@ class AppSettingsFragment : Fragment() {
 				false
 			) { exitProcess(0) }
 		}
+	}
+	
+	override fun onDestroyView() {
+		super.onDestroyView()
+		binding = null
 	}
 }

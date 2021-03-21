@@ -16,7 +16,7 @@ import ir.androidDev.homeLandDefenders.connections.Url
 import ir.androidDev.homeLandDefenders.contentManagement.ContentManager
 import ir.androidDev.homeLandDefenders.dataModels.WarHistoryPart
 import ir.androidDev.homeLandDefenders.database.Database
-import kotlinx.android.synthetic.main.activity_war_history.*
+import ir.androidDev.homeLandDefenders.databinding.ActivityWarHistoryBinding
 
 class WarHistoryActivity : CustomizableActivity() {
 	
@@ -24,6 +24,9 @@ class WarHistoryActivity : CustomizableActivity() {
 	companion object {
 		private var warHistoryParts: MutableList<WarHistoryPart> = ArrayList()
 	}
+	
+	/* view binding */
+	private lateinit var binding: ActivityWarHistoryBinding
 	
 	/* database */
 	private val database = Database(this)
@@ -45,10 +48,12 @@ class WarHistoryActivity : CustomizableActivity() {
 		window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
 		
 		super.onCreate(savedInstanceState)
-		setContentView(R.layout.activity_war_history)
+		binding = ActivityWarHistoryBinding.inflate(layoutInflater)
+		val view = binding.root
+		setContentView(view)
 		
 		/* make the title marquee */
-		tv_warHistoryActivity_titleTv.isSelected = true
+		binding.tvWarHistoryActivityTitleTv.isSelected = true
 		
 		/* load download preferences */
 		loadPreferences()
@@ -63,21 +68,21 @@ class WarHistoryActivity : CustomizableActivity() {
 		loadContent()
 		
 		/* back to home button */
-		iv_warHistoryActivity_back.setOnClickListener { finish() }
+		binding.ivWarHistoryActivityBack.setOnClickListener { finish() }
 		
 		/* on refresh click */
-		iv_warHistoryActivity_refresh.setOnClickListener { loadContent() }
+		binding.ivWarHistoryActivityRefresh.setOnClickListener { loadContent() }
 		
 		/* on load scroll state click */
-		iv_warHistoryActivity_loadState.setOnClickListener { nsv_warHistoryActivity_mainContainer.smoothScrollTo(0, lastScroll, 1500) }
+		binding.ivWarHistoryActivityLoadState.setOnClickListener { binding.nsvWarHistoryActivityMainContainer.smoothScrollTo(0, lastScroll, 1500) }
 		
 		/* on save scroll state click */
-		fab_warHistoryActivity_saveState.setOnClickListener { saveScrollState() }
+		binding.fabWarHistoryActivitySaveState.setOnClickListener { saveScrollState() }
 		
 		/* on scroll hide/show fab */
 		var oldI = 0
-		apb_warHistoryPageActivity_appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, i ->
-			fab_warHistoryActivity_saveState.let { if (i < oldI) it.hide() else it.show() }
+		binding.apbWarHistoryPageActivityAppBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, i ->
+			binding.fabWarHistoryActivitySaveState.let { if (i < oldI) it.hide() else it.show() }
 			oldI = i + 1
 		})
 	}
@@ -93,9 +98,9 @@ class WarHistoryActivity : CustomizableActivity() {
 	 * setups the recycler view
 	 */
 	private fun setupRecyclerView() {
-		rv_warHistoryActivity_recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+		binding.rvWarHistoryActivityRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 		adapter = WarHistoryAdapter(this, warHistoryParts, autoDownload!!)
-		rv_warHistoryActivity_recyclerView.adapter = adapter
+		binding.rvWarHistoryActivityRecyclerView.adapter = adapter
 	}
 	
 	/**
@@ -104,7 +109,7 @@ class WarHistoryActivity : CustomizableActivity() {
 	private fun gatherScrollState() {
 		val scrollPos = database.getRowBy(Database.TBL_SCROLL, "name", Database.WAR_HISTORY).getIntOrNull(2)
 		
-		if (scrollPos == null) iv_warHistoryActivity_loadState.visibility = View.GONE else lastScroll = scrollPos
+		if (scrollPos == null) binding.ivWarHistoryActivityLoadState.visibility = View.GONE else lastScroll = scrollPos
 	}
 	
 	/**
@@ -162,7 +167,7 @@ class WarHistoryActivity : CustomizableActivity() {
 	 * saves the scroll state on fab click
 	 */
 	private fun saveScrollState() {
-		val scroll = nsv_warHistoryActivity_mainContainer.scrollY
+		val scroll = binding.nsvWarHistoryActivityMainContainer.scrollY
 		
 		val cv = ContentValues()
 		cv.put("scroll", scroll)
@@ -172,7 +177,7 @@ class WarHistoryActivity : CustomizableActivity() {
 		
 		Toast.makeText(this, getString(R.string.save_state_string_saved), Toast.LENGTH_SHORT).show()
 		
-		iv_warHistoryActivity_loadState.let { if (it.visibility == View.GONE) it.visibility = View.VISIBLE }
+		binding.ivWarHistoryActivityLoadState.let { if (it.visibility == View.GONE) it.visibility = View.VISIBLE }
 	}
 	
 	/**
@@ -182,7 +187,7 @@ class WarHistoryActivity : CustomizableActivity() {
 	 * @param ref the Refresh button
 	 */
 	private fun loaders(prb: Boolean, ref: Boolean) {
-		iv_warHistoryActivity_refresh.visibility = if (ref) View.VISIBLE else View.GONE
-		prb_warHistoryActivity_progressBar.visibility = if (prb) View.VISIBLE else View.GONE
+		binding.ivWarHistoryActivityRefresh.visibility = if (ref) View.VISIBLE else View.GONE
+		binding.prbWarHistoryActivityProgressBar.visibility = if (prb) View.VISIBLE else View.GONE
 	}
 }

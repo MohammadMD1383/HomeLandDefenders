@@ -8,6 +8,7 @@ import android.text.SpannableString
 import android.text.style.TextAppearanceSpan
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -16,12 +17,14 @@ import ir.androidDev.homeLandDefenders.connections.Url
 import ir.androidDev.homeLandDefenders.contentManagement.ContentManager
 import ir.androidDev.homeLandDefenders.contentManagement.NewContent
 import ir.androidDev.homeLandDefenders.database.Database
+import ir.androidDev.homeLandDefenders.databinding.ActivityHomePageBinding
 import ir.androidDev.homeLandDefenders.fragments.*
 import ir.androidDev.homeLandDefenders.utility.Util
-import kotlinx.android.synthetic.main.activity_home_page.*
-import kotlinx.android.synthetic.main.home_page_drawer_header.view.*
 
 class HomePageActivity : CustomizableActivity() {
+	
+	/* view binding */
+	private lateinit var binding: ActivityHomePageBinding
 	
 	/* database */
 	private val database = Database(this)
@@ -41,10 +44,12 @@ class HomePageActivity : CustomizableActivity() {
 		window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
 		
 		super.onCreate(savedInstanceState)
-		setContentView(R.layout.activity_home_page)
+		binding = ActivityHomePageBinding.inflate(layoutInflater)
+		val view = binding.root
+		setContentView(view)
 		
 		/* make the title marquee */
-		tv_homePageActivity_titleTv.isSelected = true
+		binding.tvHomePageActivityTitleTv.isSelected = true
 		
 		/* Navigation view group text color fix */
 		nvgViewColorFix()
@@ -52,52 +57,52 @@ class HomePageActivity : CustomizableActivity() {
 		/* Navigation view and drawer layout */
 		val aToggle = ActionBarDrawerToggle(
 			this,
-			drl_homePageActivity_container,
+			binding.drlHomePageActivityContainer,
 			R.string.action_bar_drawer_toggle_open,
 			R.string.action_bar_drawer_toggle_close
 		)
-		drl_homePageActivity_container.addDrawerListener(aToggle)
+		binding.drlHomePageActivityContainer.addDrawerListener(aToggle)
 		aToggle.syncState()
 		
 		/* show the user nick name */
 		showUserNickName()
 		
 		/* set navigation item select listener */
-		nvg_homeActivity_nav.setNavigationItemSelectedListener { handleNvgItemsClick(it) }
+		binding.nvgHomeActivityNav.setNavigationItemSelectedListener { handleNvgItemsClick(it) }
 		
 		/* drawer open button */
-		iv_homePageActivity_openNav.setOnClickListener {
-			drl_homePageActivity_container.openDrawer(GravityCompat.START)
+		binding.ivHomePageActivityOpenNav.setOnClickListener {
+			binding.drlHomePageActivityContainer.openDrawer(GravityCompat.START)
 		}
 		
 		/* main buttons intents */
 		/* مقدمه */
-		btn_homePageActivity_introduction.setOnClickListener {
+		binding.btnHomePageActivityIntroduction.setOnClickListener {
 			startActivity(Intent(this, IntroductionActivity::class.java))
 		}
 		
 		/* زندگی نامه */
-		btn_homePageActivity_biography.setOnClickListener {
+		binding.btnHomePageActivityBiography.setOnClickListener {
 			startActivity(Intent(this, BiographyActivity::class.java))
 		}
 		
 		/* وصیت نامه */
-		btn_homePageActivity_testament.setOnClickListener {
+		binding.btnHomePageActivityTestament.setOnClickListener {
 			startActivity(Intent(this, TestamentActivity::class.java))
 		}
 		
 		/* نقشه عملیات ها */
-		btn_homePageActivity_operations.setOnClickListener {
+		binding.btnHomePageActivityOperations.setOnClickListener {
 			startActivity(Intent(this, OperationActivity::class.java))
 		}
 		
 		/* تاریخچه و جزئیات جنگ */
-		btn_homePageActivity_warHistory.setOnClickListener {
+		binding.btnHomePageActivityWarHistory.setOnClickListener {
 			startActivity(Intent(this, WarHistoryActivity::class.java))
 		}
 		
 		/* جانبازان گرانقدر */
-		btn_homePageActivity_veterans.setOnClickListener {
+		binding.btnHomePageActivityVeterans.setOnClickListener {
 			startActivity(Intent(this, VeteransActivity::class.java))
 		}
 	}
@@ -106,7 +111,7 @@ class HomePageActivity : CustomizableActivity() {
 	 * fixes some colors of nvg view
 	 */
 	private fun nvgViewColorFix() {
-		val toolsSection = nvg_homeActivity_nav.menu.findItem(R.id.group_nvg_drawer_tools)
+		val toolsSection = binding.nvgHomeActivityNav.menu.findItem(R.id.group_nvg_drawer_tools)
 		val spannableString = SpannableString(toolsSection.title)
 		
 		spannableString.setSpan(TextAppearanceSpan(this, R.style.GroupTitleTextAppearance), 0, spannableString.length, 0)
@@ -120,7 +125,7 @@ class HomePageActivity : CustomizableActivity() {
 	 */
 	private fun showUserNickName() {
 		val cursor = database.getRowBy(Database.TBL_SETTINGS, "name", "nick_name")
-		nvg_homeActivity_nav.getHeaderView(0).nvg_headerView_textView.text = cursor.getString(1)
+		binding.nvgHomeActivityNav.getHeaderView(0).findViewById<TextView>(R.id.nvg_headerView_textView).text = cursor.getString(1)
 	}
 	
 	/**
@@ -169,7 +174,7 @@ class HomePageActivity : CustomizableActivity() {
 			}
 		}
 		
-		drl_homePageActivity_container.closeDrawer(GravityCompat.START)
+		binding.drlHomePageActivityContainer.closeDrawer(GravityCompat.START)
 		
 		return true
 	}
@@ -180,7 +185,7 @@ class HomePageActivity : CustomizableActivity() {
 	 * @param title the new title
 	 */
 	private fun setPageTitle(title: String) {
-		tv_homePageActivity_titleTv.text = title
+		binding.tvHomePageActivityTitleTv.text = title
 	}
 	
 	/**
@@ -216,7 +221,7 @@ class HomePageActivity : CustomizableActivity() {
 		if (!ContentManager.isConnected(this)) {
 			d.dismiss()
 			Toast.makeText(this, getString(R.string.string_please_connect), Toast.LENGTH_SHORT).show()
-			Handler(Looper.getMainLooper()).post { nvg_homeActivity_nav.menu.getItem(0).isChecked = true }
+			Handler(Looper.getMainLooper()).post { binding.nvgHomeActivityNav.menu.getItem(0).isChecked = true }
 			showHome()
 			return
 		}
@@ -225,7 +230,7 @@ class HomePageActivity : CustomizableActivity() {
 		util.getBooleanFromServer(Url.let { it.OPTIONS + it.SEND_COMMENT }, {
 			if (!it) {
 				Toast.makeText(this, getString(R.string.home_page_string_comment_not_possible), Toast.LENGTH_LONG).show()
-				nvg_homeActivity_nav.menu.getItem(0).isChecked = true
+				binding.nvgHomeActivityNav.menu.getItem(0).isChecked = true
 				showHome()
 				d.dismiss()
 				return@getBooleanFromServer
@@ -251,7 +256,7 @@ class HomePageActivity : CustomizableActivity() {
 		if (!ContentManager.isConnected(this)) {
 			d.dismiss()
 			Toast.makeText(this, getString(R.string.string_please_connect), Toast.LENGTH_SHORT).show()
-			Handler(Looper.getMainLooper()).post { nvg_homeActivity_nav.menu.getItem(0).isChecked = true }
+			Handler(Looper.getMainLooper()).post { binding.nvgHomeActivityNav.menu.getItem(0).isChecked = true }
 			showHome()
 			return
 		}
@@ -260,7 +265,7 @@ class HomePageActivity : CustomizableActivity() {
 		util.getBooleanFromServer(Url.let { it.OPTIONS + it.SEND_CONTENT }, {
 			if (!it) {
 				Toast.makeText(this, getString(R.string.home_page_string_add_content_not_possible), Toast.LENGTH_LONG).show()
-				nvg_homeActivity_nav.menu.getItem(0).isChecked = true
+				binding.nvgHomeActivityNav.menu.getItem(0).isChecked = true
 				showHome()
 				d.dismiss()
 				return@getBooleanFromServer
@@ -346,14 +351,14 @@ class HomePageActivity : CustomizableActivity() {
 	}
 	
 	override fun onBackPressed() {
-		if (drl_homePageActivity_container.isDrawerOpen(GravityCompat.START))
-			drl_homePageActivity_container.closeDrawer(GravityCompat.START)
+		if (binding.drlHomePageActivityContainer.isDrawerOpen(GravityCompat.START))
+			binding.drlHomePageActivityContainer.closeDrawer(GravityCompat.START)
 		else super.onBackPressed()
 		
 		/* change the nvg drawer selected item to home after back press */
 		if (supportFragmentManager.backStackEntryCount == 0) {
 			setPageTitle(resources.getString(R.string.app_name))
-			nvg_homeActivity_nav.menu.getItem(0).isChecked = true
+			binding.nvgHomeActivityNav.menu.getItem(0).isChecked = true
 		}
 	}
 }

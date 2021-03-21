@@ -1,9 +1,7 @@
 package ir.androidDev.homeLandDefenders
 
-import android.graphics.Typeface
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat
 import ir.androidDev.homeLandDefenders.database.Database
 
 open class CustomizableActivity : AppCompatActivity() {

@@ -6,7 +6,6 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-
 class Database(context: Context?) : SQLiteOpenHelper(context, "hld.db", null, 1) {
 	
 	/**
@@ -18,7 +17,6 @@ class Database(context: Context?) : SQLiteOpenHelper(context, "hld.db", null, 1)
 		const val TBL_OPERATION = "operation"
 		const val TBL_SCROLL = "scroll"
 		const val TBL_SETTINGS = "settings"
-		
 		const val WAR_HISTORY = "war_history"
 	}
 	

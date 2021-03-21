@@ -11,10 +11,13 @@ import androidx.recyclerview.widget.RecyclerView
 import ir.androidDev.homeLandDefenders.adapters.BiographyItemAdapter
 import ir.androidDev.homeLandDefenders.dataModels.BiographyItem
 import ir.androidDev.homeLandDefenders.database.Database
+import ir.androidDev.homeLandDefenders.databinding.ActivityBiographyBinding
 import ir.androidDev.homeLandDefenders.pages.BiographyPageActivity
-import kotlinx.android.synthetic.main.activity_biography.*
 
 class BiographyActivity : CustomizableActivity() {
+	
+	/* view binding */
+	private lateinit var binding: ActivityBiographyBinding
 	
 	/* biography list */
 	private val biographyItems: MutableList<BiographyItem> = ArrayList()
@@ -39,32 +42,34 @@ class BiographyActivity : CustomizableActivity() {
 		window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
 		
 		super.onCreate(savedInstanceState)
-		setContentView(R.layout.activity_biography)
+		binding = ActivityBiographyBinding.inflate(layoutInflater)
+		val view = binding.root
+		setContentView(view)
 		
 		/* make the title marquee */
-		tv_biographyActivity_titleTv.isSelected = true
+		binding.tvBiographyActivityTitleTv.isSelected = true
 		
 		/* back to home button */
-		iv_biographyActivity_back.setOnClickListener { finish() }
+		binding.ivBiographyActivityBack.setOnClickListener { finish() }
 		
 		/* color fix the search view */
 		searchViewColorFix()
 		
 		/* open search box */
-		sv_biographyActivity_searchView.setOnSearchClickListener {
-			tv_biographyActivity_titleTv.visibility = View.GONE
-			iv_biographyActivity_back.visibility = View.GONE
+		binding.svBiographyActivitySearchView.setOnSearchClickListener {
+			binding.tvBiographyActivityTitleTv.visibility = View.GONE
+			binding.ivBiographyActivityBack.visibility = View.GONE
 		}
 		
 		/* close search box */
-		sv_biographyActivity_searchView.setOnCloseListener {
-			tv_biographyActivity_titleTv.visibility = View.VISIBLE
-			iv_biographyActivity_back.visibility = View.VISIBLE
+		binding.svBiographyActivitySearchView.setOnCloseListener {
+			binding.tvBiographyActivityTitleTv.visibility = View.VISIBLE
+			binding.ivBiographyActivityBack.visibility = View.VISIBLE
 			return@setOnCloseListener false
 		}
 		
 		/* apply search filters */
-		sv_biographyActivity_searchView.setOnQueryTextListener(object :
+		binding.svBiographyActivitySearchView.setOnQueryTextListener(object :
 			SearchView.OnQueryTextListener {
 			override fun onQueryTextSubmit(query: String?): Boolean {
 				adapter!!.filter(query)
@@ -82,10 +87,10 @@ class BiographyActivity : CustomizableActivity() {
 		
 		/* check if there is a saved state to load */
 		val cursor = database.getRowBy(Database.TBL_SCROLL, "name", Database.TBL_BIOGRAPHY)
-		if (cursor.getIntOrNull(1) == null) fab_biographyActivity_loadState.hide()
+		if (cursor.getIntOrNull(1) == null) binding.fabBiographyActivityLoadState.hide()
 		
 		/* load last saved state */
-		fab_biographyActivity_loadState.setOnClickListener {
+		binding.fabBiographyActivityLoadState.setOnClickListener {
 			startActivity(
 				Intent(this, BiographyPageActivity::class.java)
 					.putExtra(BIO_ID, cursor.getInt(1))
@@ -102,8 +107,7 @@ class BiographyActivity : CustomizableActivity() {
 	 * fixes the colors of search view buttons and texts
 	 */
 	private fun searchViewColorFix() {
-		val sac: SearchView.SearchAutoComplete =
-			sv_biographyActivity_searchView.findViewById(androidx.appcompat.R.id.search_src_text)
+		val sac: SearchView.SearchAutoComplete = binding.svBiographyActivitySearchView.findViewById(androidx.appcompat.R.id.search_src_text)
 		sac.setHintTextColor(Color.WHITE)
 		sac.setTextColor(Color.WHITE)
 	}
@@ -134,23 +138,22 @@ class BiographyActivity : CustomizableActivity() {
 	 * setups the recycler view
 	 */
 	private fun setupRecyclerView() {
-		rv_biographyActivity_recyclerView.layoutManager =
-			LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+		binding.rvBiographyActivityRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 		
 		adapter = BiographyItemAdapter(this, biographyItems, autoDownload!!) {
 			startActivity(Intent(this, BiographyPageActivity::class.java).putExtra(BIO_ID, it))
 			finish()
 		}
-		rv_biographyActivity_recyclerView.adapter = adapter
+		binding.rvBiographyActivityRecyclerView.adapter = adapter
 		
 		/* check if fab is available */
-		if (fab_biographyActivity_loadState.isOrWillBeHidden) return
+		if (binding.fabBiographyActivityLoadState.isOrWillBeHidden) return
 		
 		/* hide/show floating action button by scroll */
-		rv_biographyActivity_recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+		binding.rvBiographyActivityRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 			override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
 				super.onScrolled(recyclerView, dx, dy)
-				fab_biographyActivity_loadState.let { if (dy > 0) it.hide() else it.show() }
+				binding.fabBiographyActivityLoadState.let { if (dy > 0) it.hide() else it.show() }
 			}
 		})
 	}

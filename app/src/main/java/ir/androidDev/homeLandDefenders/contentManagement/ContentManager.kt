@@ -45,7 +45,6 @@ open class ContentManager(private val context: Context) {
 			return hashMapOf(Pair("Cookie", mCookie!!))
 		}
 		
-		
 		/**
 		 * checks network availability for download
 		 */
@@ -133,13 +132,22 @@ open class ContentManager(private val context: Context) {
 				{
 					when (missingDataList[i]) {
 						Url.BIOGRAPHY -> saveToBiography(it) {
-							if (--dCounter == 0) d.dismiss(); onFinishedListener()
+							if (--dCounter == 0) {
+								d.dismiss()
+								onFinishedListener()
+							}
 						}
 						Url.TESTAMENT -> saveToTestament(it) {
-							if (--dCounter == 0) d.dismiss(); onFinishedListener()
+							if (--dCounter == 0) {
+								d.dismiss()
+								onFinishedListener()
+							}
 						}
 						Url.OPERATION -> saveToOperation(it) {
-							if (--dCounter == 0) d.dismiss(); onFinishedListener()
+							if (--dCounter == 0) {
+								d.dismiss()
+								onFinishedListener()
+							}
 						}
 					}
 				},
@@ -154,8 +162,7 @@ open class ContentManager(private val context: Context) {
 			}
 			
 			/* setting retry policy */
-			request.retryPolicy =
-				DefaultRetryPolicy(20000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+			request.retryPolicy = DefaultRetryPolicy(20000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
 			
 			/* adding to queue and send */
 			queue.add(request)

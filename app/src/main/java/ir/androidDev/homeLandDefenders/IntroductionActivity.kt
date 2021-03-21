@@ -2,20 +2,26 @@ package ir.androidDev.homeLandDefenders
 
 import android.os.Bundle
 import android.view.View
-import kotlinx.android.synthetic.main.activity_introduction.*
+import ir.androidDev.homeLandDefenders.databinding.ActivityIntroductionBinding
 
 class IntroductionActivity : CustomizableActivity() {
+	
+	/* view binding */
+	private lateinit var binding: ActivityIntroductionBinding
+	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		/* force direction to RTL */
 		window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
 		
 		super.onCreate(savedInstanceState)
-		setContentView(R.layout.activity_introduction)
+		binding = ActivityIntroductionBinding.inflate(layoutInflater)
+		val view = binding.root
+		setContentView(view)
 		
 		/* make the title marquee */
-		tv_introductionActivity_titleTv.isSelected = true
+		binding.tvIntroductionActivityTitleTv.isSelected = true
 		
 		/* back to home page by button */
-		iv_introductionActivity_back.setOnClickListener { finish() }
+		binding.ivIntroductionActivityBack.setOnClickListener { finish() }
 	}
 }

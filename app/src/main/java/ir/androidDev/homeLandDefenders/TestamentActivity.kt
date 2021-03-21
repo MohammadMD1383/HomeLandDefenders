@@ -11,10 +11,13 @@ import androidx.recyclerview.widget.RecyclerView
 import ir.androidDev.homeLandDefenders.adapters.TestamentItemAdapter
 import ir.androidDev.homeLandDefenders.dataModels.TestamentItem
 import ir.androidDev.homeLandDefenders.database.Database
+import ir.androidDev.homeLandDefenders.databinding.ActivityTestamentBinding
 import ir.androidDev.homeLandDefenders.pages.TestamentPageActivity
-import kotlinx.android.synthetic.main.activity_testament.*
 
 class TestamentActivity : CustomizableActivity() {
+	
+	/* view binding */
+	private lateinit var binding: ActivityTestamentBinding
 	
 	/* items list */
 	private val testamentItems: MutableList<TestamentItem> = ArrayList()
@@ -39,32 +42,34 @@ class TestamentActivity : CustomizableActivity() {
 		window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
 		
 		super.onCreate(savedInstanceState)
-		setContentView(R.layout.activity_testament)
+		binding = ActivityTestamentBinding.inflate(layoutInflater)
+		val view = binding.root
+		setContentView(view)
 		
 		/* make the title marquee */
-		tv_testamentActivity_titleTv.isSelected = true
+		binding.tvTestamentActivityTitleTv.isSelected = true
 		
 		/* back to home button */
-		iv_testamentActivity_back.setOnClickListener { finish() }
+		binding.ivTestamentActivityBack.setOnClickListener { finish() }
 		
 		/* search view color fix */
 		searchViewColorFix()
 		
 		/* open search view */
-		sv_testamentActivity_searchView.setOnSearchClickListener {
-			tv_testamentActivity_titleTv.visibility = View.GONE
-			iv_testamentActivity_back.visibility = View.GONE
+		binding.svTestamentActivitySearchView.setOnSearchClickListener {
+			binding.tvTestamentActivityTitleTv.visibility = View.GONE
+			binding.ivTestamentActivityBack.visibility = View.GONE
 		}
 		
 		/* close search view */
-		sv_testamentActivity_searchView.setOnCloseListener {
-			tv_testamentActivity_titleTv.visibility = View.VISIBLE
-			iv_testamentActivity_back.visibility = View.VISIBLE
+		binding.svTestamentActivitySearchView.setOnCloseListener {
+			binding.tvTestamentActivityTitleTv.visibility = View.VISIBLE
+			binding.ivTestamentActivityBack.visibility = View.VISIBLE
 			return@setOnCloseListener false
 		}
 		
 		/* apply search filters */
-		sv_testamentActivity_searchView.setOnQueryTextListener(object :
+		binding.svTestamentActivitySearchView.setOnQueryTextListener(object :
 			SearchView.OnQueryTextListener {
 			override fun onQueryTextSubmit(query: String?): Boolean {
 				adapter!!.filter(query)
@@ -82,10 +87,10 @@ class TestamentActivity : CustomizableActivity() {
 		
 		/* check if there is a saved state to load */
 		val cursor = database.getRowBy(Database.TBL_SCROLL, "name", Database.TBL_TESTAMENT)
-		if (cursor.getIntOrNull(1) == null) fab_testamentActivity_loadState.hide()
+		if (cursor.getIntOrNull(1) == null) binding.fabTestamentActivityLoadState.hide()
 		
 		/* load last saved state */
-		fab_testamentActivity_loadState.setOnClickListener {
+		binding.fabTestamentActivityLoadState.setOnClickListener {
 			startActivity(
 				Intent(this, TestamentPageActivity::class.java)
 					.putExtra(BIO_ID, cursor.getInt(1))
@@ -103,7 +108,7 @@ class TestamentActivity : CustomizableActivity() {
 	 */
 	private fun searchViewColorFix() {
 		val sac: SearchView.SearchAutoComplete =
-			sv_testamentActivity_searchView.findViewById(androidx.appcompat.R.id.search_src_text)
+			binding.svTestamentActivitySearchView.findViewById(androidx.appcompat.R.id.search_src_text)
 		sac.setTextColor(Color.WHITE)
 		sac.setHintTextColor(Color.WHITE)
 	}
@@ -132,23 +137,22 @@ class TestamentActivity : CustomizableActivity() {
 	 * setups recycler view
 	 */
 	private fun setupRecyclerView() {
-		rv_testamentActivity_recyclerView.layoutManager =
-			LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+		binding.rvTestamentActivityRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 		
 		adapter = TestamentItemAdapter(this, testamentItems, autoDownload!!) {
 			startActivity(Intent(this, TestamentPageActivity::class.java).putExtra(BIO_ID, it))
 			finish()
 		}
-		rv_testamentActivity_recyclerView.adapter = adapter
+		binding.rvTestamentActivityRecyclerView.adapter = adapter
 		
 		/* check if fab is available */
-		if (fab_testamentActivity_loadState.isOrWillBeHidden) return
+		if (binding.fabTestamentActivityLoadState.isOrWillBeHidden) return
 		
 		/* hide/show floating action button by scroll */
-		rv_testamentActivity_recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+		binding.rvTestamentActivityRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 			override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
 				super.onScrolled(recyclerView, dx, dy)
-				fab_testamentActivity_loadState.let { if (dy > 0) it.hide() else it.show() }
+				binding.fabTestamentActivityLoadState.let { if (dy > 0) it.hide() else it.show() }
 			}
 		})
 	}

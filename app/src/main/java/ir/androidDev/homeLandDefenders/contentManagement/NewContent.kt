@@ -43,17 +43,29 @@ class NewContent(private val context: Context) : ContentManager(context) {
 					/* save data */
 					when (cnt[i]) {
 						Url.BIOGRAPHY -> saveToBiography(json) {
-							if (--dCounter == 0) d.dismiss(); onFinishedListener()
+							if (--dCounter == 0) {
+								d.dismiss()
+								onFinishedListener()
+							}
 						}
 						Url.TESTAMENT -> saveToTestament(json) {
-							if (--dCounter == 0) d.dismiss(); onFinishedListener()
+							if (--dCounter == 0) {
+								d.dismiss()
+								onFinishedListener()
+							}
 						}
 						Url.OPERATION -> saveToOperation(json) {
-							if (--dCounter == 0) d.dismiss(); onFinishedListener()
+							if (--dCounter == 0) {
+								d.dismiss()
+								onFinishedListener()
+							}
 						}
 					}
 				} else {
-					if (--dCounter == 0) d.dismiss(); onFinishedListener()
+					if (--dCounter == 0) {
+						d.dismiss()
+						onFinishedListener()
+					}
 				}
 			}, {
 				if (--dCounter == 0) onFinishedListener()

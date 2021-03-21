@@ -8,9 +8,12 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ir.androidDev.homeLandDefenders.contentManagement.ContentManager
-import kotlinx.android.synthetic.main.activity_main.*
+import ir.androidDev.homeLandDefenders.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+	
+	/* view binding */
+	private lateinit var binding: ActivityMainBinding
 	
 	/* Intent to home page */
 	private var i: Intent? = null
@@ -23,7 +26,9 @@ class MainActivity : AppCompatActivity() {
 		window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
 		
 		super.onCreate(savedInstanceState)
-		setContentView(R.layout.activity_main)
+		binding = ActivityMainBinding.inflate(layoutInflater)
+		val view = binding.root
+		setContentView(view)
 		
 		/* intent */
 		i = Intent(this, HomePageActivity::class.java)
@@ -49,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 	 */
 	private fun resume() {
 		/* make the page visible */
-		mainActivity_welcome.visibility = View.VISIBLE
+		binding.mainActivityWelcome.visibility = View.VISIBLE
 		
 		/* intent by delay */
 		handler.postDelayed(
@@ -65,7 +70,7 @@ class MainActivity : AppCompatActivity() {
 		)
 		
 		/* intent On Click */
-		mainActivity_welcome.setOnClickListener {
+		binding.mainActivityWelcome.setOnClickListener {
 			/* remove the delayed intent */
 			handler.removeCallbacksAndMessages(null)
 			

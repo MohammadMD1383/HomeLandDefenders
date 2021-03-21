@@ -14,25 +14,22 @@ import ir.androidDev.homeLandDefenders.R
 import ir.androidDev.homeLandDefenders.connections.Url
 import ir.androidDev.homeLandDefenders.contentManagement.ContentManager
 import ir.androidDev.homeLandDefenders.database.Database
+import ir.androidDev.homeLandDefenders.databinding.FragmentSendContentBinding
 import ir.androidDev.homeLandDefenders.utility.Util
-import kotlinx.android.synthetic.main.fragment_send_content.*
-import kotlinx.android.synthetic.main.fragment_send_content.view.*
 
 class SendContentFragment : Fragment() {
 	
-	private var rootView: View? = null
+	/* view binding */
+	private var binding: FragmentSendContentBinding? = null
 	
-	override fun onCreateView(
-		inflater: LayoutInflater, container: ViewGroup?,
-		savedInstanceState: Bundle?
-	): View? {
-		if (rootView == null) {
-			rootView = inflater.inflate(R.layout.fragment_send_content, container, false)
+	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+		if (binding == null) {
+			binding = FragmentSendContentBinding.inflate(inflater, container, false)
 			
 			/* set send button on click listener */
 			setOnSendButtonClickListener()
 		}
-		return rootView
+		return binding!!.root
 	}
 	
 	/**
@@ -41,8 +38,8 @@ class SendContentFragment : Fragment() {
 	 * then makes request and send it
 	 */
 	private fun setOnSendButtonClickListener() {
-		rootView!!.btn_sendContentFragment_send.setOnClickListener {
-			if (et_sendContentFragment_content.text.trim().isEmpty()) {
+		binding!!.btnSendContentFragmentSend.setOnClickListener {
+			if (binding!!.etSendContentFragmentContent.text.trim().isEmpty()) {
 				Toast.makeText(context, getString(R.string.send_content_fragment_string_please_fill_text), Toast.LENGTH_SHORT).show()
 				return@setOnClickListener
 			}
@@ -59,7 +56,7 @@ class SendContentFragment : Fragment() {
 			val request = object : StringRequest(Method.POST, Url.CONTENT, {
 				d.dismiss()
 				Toast.makeText(context, getString(R.string.comments_fragment_string_comment_sent), Toast.LENGTH_SHORT).show()
-				et_sendContentFragment_content.setText("")
+				binding!!.etSendContentFragmentContent.setText("")
 			}, {
 				d.dismiss()
 				Toast.makeText(context!!, getString(R.string.comments_fragment_string_send_error), Toast.LENGTH_SHORT).show()
@@ -94,8 +91,13 @@ class SendContentFragment : Fragment() {
 		val map: MutableMap<String, String> = HashMap()
 		
 		map["user"] = userName
-		map["content"] = rootView!!.et_sendContentFragment_content.text.toString().trim()
+		map["content"] = binding!!.etSendContentFragmentContent.text.toString().trim()
 		
 		return map
+	}
+	
+	override fun onDestroyView() {
+		super.onDestroyView()
+		binding = null
 	}
 }

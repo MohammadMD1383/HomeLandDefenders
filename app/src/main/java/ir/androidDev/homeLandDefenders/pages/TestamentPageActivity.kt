@@ -16,9 +16,12 @@ import ir.androidDev.homeLandDefenders.CustomizableActivity
 import ir.androidDev.homeLandDefenders.R
 import ir.androidDev.homeLandDefenders.TestamentActivity
 import ir.androidDev.homeLandDefenders.database.Database
-import kotlinx.android.synthetic.main.activity_testament_page.*
+import ir.androidDev.homeLandDefenders.databinding.ActivityTestamentPageBinding
 
 class TestamentPageActivity : CustomizableActivity() {
+	
+	/* view binding */
+	private lateinit var binding: ActivityTestamentPageBinding
 	
 	/* database */
 	private val database = Database(this)
@@ -28,10 +31,12 @@ class TestamentPageActivity : CustomizableActivity() {
 		window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
 		
 		super.onCreate(savedInstanceState)
-		setContentView(R.layout.activity_testament_page)
+		binding = ActivityTestamentPageBinding.inflate(layoutInflater)
+		val view = binding.root
+		setContentView(view)
 		
 		/* make the title marquee */
-		tv_testamentPageActivity_titleTv.isSelected = true
+		binding.tvTestamentPageActivityTitleTv.isSelected = true
 		
 		/* check parameters passed in intent */
 		checkIntentParams()
@@ -40,16 +45,16 @@ class TestamentPageActivity : CustomizableActivity() {
 		getAndShowData()
 		
 		/* back to TestamentActivity */
-		iv_testamentPageActivity_back.setOnClickListener {
+		binding.ivTestamentPageActivityBack.setOnClickListener {
 			startActivity(Intent(this, TestamentActivity::class.java))
 			finish()
 		}
 		
 		/* save scroll position */
-		fab_testamentPageActivity_saveState.setOnClickListener {
+		binding.fabTestamentPageActivitySaveState.setOnClickListener {
 			val cv = ContentValues()
 			cv.put("ext_id", intent.getIntExtra(TestamentActivity.BIO_ID, 0))
-			cv.put("scroll", nsv_testamentPageActivity_mainContainer.scrollY)
+			cv.put("scroll", binding.nsvTestamentPageActivityMainContainer.scrollY)
 			database.updateBy(Database.TBL_SCROLL, cv, "name", Database.TBL_TESTAMENT)
 			
 			Toast.makeText(this, getString(R.string.save_state_string_saved), Toast.LENGTH_SHORT).show()
@@ -57,8 +62,8 @@ class TestamentPageActivity : CustomizableActivity() {
 		
 		/* on scroll hide/show fab */
 		var oldI = 0
-		apb_testamentPageActivity_appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, i ->
-			fab_testamentPageActivity_saveState.let { if (i < oldI) it.hide() else it.show() }
+		binding.apbTestamentPageActivityAppBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, i ->
+			binding.fabTestamentPageActivitySaveState.let { if (i < oldI) it.hide() else it.show() }
 			oldI = i + 1
 		})
 	}
@@ -79,8 +84,8 @@ class TestamentPageActivity : CustomizableActivity() {
 	private fun getAndShowData() {
 		val cursor = database.getRowById(Database.TBL_TESTAMENT, intent.getIntExtra(TestamentActivity.BIO_ID, 0))
 		
-		tv_testamentPageActivity_titleTv.text = cursor.getString(1)
-		tv_testamentPageActivity_mainTv.text = cursor.getString(4)
+		binding.tvTestamentPageActivityTitleTv.text = cursor.getString(1)
+		binding.tvTestamentPageActivityMainTv.text = cursor.getString(4)
 		
 		/* get permission for download */
 		val ad = database.getRowBy(Database.TBL_SETTINGS, "name", "auto_download").getInt(1) == 1
@@ -90,22 +95,22 @@ class TestamentPageActivity : CustomizableActivity() {
 		val placeholder = ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_photo_24, null)!!
 		
 		/* check if there is no photo then set the visibility to GONE */
-		if (url.contains("void(0)", true)) fr_testamentPageActivity_imageContainer.visibility = View.GONE
+		if (url.contains("void(0)", true)) binding.frTestamentPageActivityImageContainer.visibility = View.GONE
 		
 		/* sets photo if cached else downloads it and then shows */
 		Picasso.get().load(url).centerInside().fit().networkPolicy(NetworkPolicy.OFFLINE).placeholder(placeholder)
-			.into(iv_testamentPageActivity_topPhoto, object : Callback {
+			.into(binding.ivTestamentPageActivityTopPhoto, object : Callback {
 				override fun onSuccess() {}
 				override fun onError(e: Exception?) {
 					if (ad)
 						Picasso.get().load(url).centerInside().fit().placeholder(placeholder)
-							.into(iv_testamentPageActivity_topPhoto)
+							.into(binding.ivTestamentPageActivityTopPhoto)
 				}
 			})
 		
 		if (intent.hasExtra(TestamentActivity.SCROLL_P)) {
 			Handler(Looper.getMainLooper()).postDelayed({
-				nsv_testamentPageActivity_mainContainer.smoothScrollTo(0, intent.getIntExtra(TestamentActivity.SCROLL_P, 0), 1500)
+				binding.nsvTestamentPageActivityMainContainer.smoothScrollTo(0, intent.getIntExtra(TestamentActivity.SCROLL_P, 0), 1500)
 			}, 0)
 		}
 	}
