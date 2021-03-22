@@ -45,10 +45,7 @@ class TestamentPageActivity : CustomizableActivity() {
 		getAndShowData()
 		
 		/* back to TestamentActivity */
-		binding.ivTestamentPageActivityBack.setOnClickListener {
-			startActivity(Intent(this, TestamentActivity::class.java))
-			finish()
-		}
+		binding.ivTestamentPageActivityBack.setOnClickListener { finish() }
 		
 		/* save scroll position */
 		binding.fabTestamentPageActivitySaveState.setOnClickListener {
@@ -72,10 +69,7 @@ class TestamentPageActivity : CustomizableActivity() {
 	 * checks that this activity started with all required parameters
 	 */
 	private fun checkIntentParams() {
-		if (!intent.hasExtra(TestamentActivity.BIO_ID)) {
-			startActivity(Intent(this, TestamentActivity::class.java))
-			finish()
-		}
+		if (!intent.hasExtra(TestamentActivity.BIO_ID)) finish()
 	}
 	
 	/**
@@ -113,11 +107,5 @@ class TestamentPageActivity : CustomizableActivity() {
 				binding.nsvTestamentPageActivityMainContainer.smoothScrollTo(0, intent.getIntExtra(TestamentActivity.SCROLL_P, 0), 1500)
 			}, 0)
 		}
-	}
-	
-	override fun onBackPressed() {
-		startActivity(Intent(this, TestamentActivity::class.java))
-		finish()
-		super.onBackPressed()
 	}
 }

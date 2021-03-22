@@ -34,7 +34,7 @@ class HomePageActivity : CustomizableActivity() {
 	private val comments = CommentsFragment()
 	private val sendContent = SendContentFragment()
 	private val contactUs = ContactUsFragment()
-	private val aboutUs = AboutUsFragment()
+//	private val aboutUs = AboutUsFragment()
 	
 	/* util object */
 	private val util = Util(this)
@@ -68,7 +68,7 @@ class HomePageActivity : CustomizableActivity() {
 		showUserNickName()
 		
 		/* set navigation item select listener */
-		binding.nvgHomeActivityNav.setNavigationItemSelectedListener { handleNvgItemsClick(it) }
+		binding.nvgHomeActivityNav.setNavigationItemSelectedListener(this::handleNvgItemsClick)
 		
 		/* drawer open button */
 		binding.ivHomePageActivityOpenNav.setOnClickListener {
@@ -126,6 +126,9 @@ class HomePageActivity : CustomizableActivity() {
 	private fun showUserNickName() {
 		val cursor = database.getRowBy(Database.TBL_SETTINGS, "name", "nick_name")
 		binding.nvgHomeActivityNav.getHeaderView(0).findViewById<TextView>(R.id.nvg_headerView_textView).text = cursor.getString(1)
+		
+		/* make it marquee */
+		binding.nvgHomeActivityNav.getHeaderView(0).findViewById<TextView>(R.id.tv_homePageDrawerHeader_socialMediaId).isSelected = true
 	}
 	
 	/**
@@ -156,10 +159,10 @@ class HomePageActivity : CustomizableActivity() {
 				setPageTitle(resources.getString(R.string.drawer_string_contact_us))
 			}
 			
-			R.id.item_nvg_drawer_aboutUs -> {
-				showFragment(aboutUs)
-				setPageTitle(resources.getString(R.string.drawer_string_about_us))
-			}
+//			R.id.item_nvg_drawer_aboutUs -> {
+//				showFragment(aboutUs)
+//				setPageTitle(resources.getString(R.string.drawer_string_about_us))
+//			}
 			
 			R.id.item_nvg_drawer_suggest -> {
 				suggestToFriends()

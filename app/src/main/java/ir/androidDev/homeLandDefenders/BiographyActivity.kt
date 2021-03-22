@@ -31,6 +31,9 @@ class BiographyActivity : CustomizableActivity() {
 	/* auto download photos */
 	private var autoDownload: Boolean? = null
 	
+	/* show load state fab */
+	private var canShowLoadStateFab = false
+	
 	/* the fields for intent */
 	companion object {
 		const val BIO_ID = "bio_id"
@@ -85,22 +88,26 @@ class BiographyActivity : CustomizableActivity() {
 		/* get the data from database */
 		getData()
 		
-		/* check if there is a saved state to load */
-		val cursor = database.getRowBy(Database.TBL_SCROLL, "name", Database.TBL_BIOGRAPHY)
-		if (cursor.getIntOrNull(1) == null) binding.fabBiographyActivityLoadState.hide()
-		
 		/* load last saved state */
 		binding.fabBiographyActivityLoadState.setOnClickListener {
+			val cursor = database.getRowBy(Database.TBL_SCROLL, "name", Database.TBL_BIOGRAPHY)
+			
 			startActivity(
 				Intent(this, BiographyPageActivity::class.java)
 					.putExtra(BIO_ID, cursor.getInt(1))
 					.putExtra(SCROLL_P, cursor.getInt(2))
 			)
-			finish()
 		}
 		
 		/* setup the recycler view */
 		setupRecyclerView()
+	}
+	
+	override fun onResume() {
+		super.onResume()
+		
+		/* check if there is a saved state to load */
+		checkLoadStateAvailability()
 	}
 	
 	/**
@@ -135,6 +142,25 @@ class BiographyActivity : CustomizableActivity() {
 	}
 	
 	/**
+	 * checks whether a scroll state is available in database and then shows the fab
+	 */
+	private fun checkLoadStateAvailability() {
+		val cursor = database.getRowBy(Database.TBL_SCROLL, "name", Database.TBL_BIOGRAPHY)
+		
+		cursor.getIntOrNull(1).let { cond ->
+			binding.fabBiographyActivityLoadState.let {
+				if (cond == null) {
+					canShowLoadStateFab = false
+					it.hide()
+				} else {
+					canShowLoadStateFab = true
+					it.show()
+				}
+			}
+		}
+	}
+	
+	/**
 	 * setups the recycler view
 	 */
 	private fun setupRecyclerView() {
@@ -142,18 +168,15 @@ class BiographyActivity : CustomizableActivity() {
 		
 		adapter = BiographyItemAdapter(this, biographyItems, autoDownload!!) {
 			startActivity(Intent(this, BiographyPageActivity::class.java).putExtra(BIO_ID, it))
-			finish()
 		}
 		binding.rvBiographyActivityRecyclerView.adapter = adapter
-		
-		/* check if fab is available */
-		if (binding.fabBiographyActivityLoadState.isOrWillBeHidden) return
 		
 		/* hide/show floating action button by scroll */
 		binding.rvBiographyActivityRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 			override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
 				super.onScrolled(recyclerView, dx, dy)
-				binding.fabBiographyActivityLoadState.let { if (dy > 0) it.hide() else it.show() }
+				
+				if (canShowLoadStateFab) binding.fabBiographyActivityLoadState.let { if (dy > 0) it.hide() else it.show() }
 			}
 		})
 	}

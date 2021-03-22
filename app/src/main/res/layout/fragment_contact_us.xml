@@ -44,14 +44,14 @@
 				android:src="@drawable/soroush" />
 			
 			<ImageView
-				android:id="@+id/iv_contactUsFragment_gap"
+				android:id="@+id/iv_contactUsFragment_instagram"
 				android:layout_width="100dp"
 				android:layout_height="0dp"
 				android:layout_gravity="center_horizontal"
 				android:layout_weight="1"
 				android:clickable="true"
 				android:focusable="true"
-				android:src="@drawable/gap" />
+				android:src="@drawable/instagram" />
 		</LinearLayout>
 	</LinearLayout>
 </FrameLayout>

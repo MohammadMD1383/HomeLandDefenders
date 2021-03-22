@@ -22,10 +22,10 @@
 			android:id="@+id/item_nvg_drawer_contactUs"
 			android:icon="@drawable/ic_baseline_contact_mail_24"
 			android:title="@string/drawer_string_contact_us" />
-		<item
-			android:id="@+id/item_nvg_drawer_aboutUs"
-			android:icon="@drawable/ic_baseline_info_24"
-			android:title="@string/drawer_string_about_us" />
+<!--		<item-->
+<!--			android:id="@+id/item_nvg_drawer_aboutUs"-->
+<!--			android:icon="@drawable/ic_baseline_info_24"-->
+<!--			android:title="@string/drawer_string_about_us" />-->
 	</group>
 	
 	<item

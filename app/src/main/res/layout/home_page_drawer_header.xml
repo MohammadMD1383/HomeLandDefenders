@@ -1,10 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
-	android:gravity="center"
-	android:textSize="20sp"
-	android:id="@+id/nvg_headerView_textView"
-	android:textColor="@android:color/white"
-	tools:text="محمد مصطفی دستجردی"
-	android:layout_height="100dp" />
+	android:layout_width="match_parent"
+	android:layout_height="200dp"
+	android:padding="16dp">
+	
+	<RelativeLayout
+		android:id="@+id/rv_homePageDrawerHeader_mahdavionContainer"
+		android:layout_width="match_parent"
+		android:layout_height="100dp"
+		android:layout_alignParentTop="true"
+		android:layout_centerHorizontal="true">
+		
+		<TextView
+			android:id="@+id/tv_homePageDrawerHeader_socialMediaId"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentStart="true"
+			android:layout_centerVertical="true"
+			android:layout_marginEnd="16dp"
+			android:layout_toStartOf="@id/shapeableImageView"
+			android:ellipsize="marquee"
+			android:gravity="center"
+			android:marqueeRepeatLimit="marquee_forever"
+			android:singleLine="true"
+			android:text="@string/social_media_id"
+			android:textColor="@android:color/white"
+			android:textSize="20sp" />
+		
+		<com.google.android.material.imageview.ShapeableImageView
+			android:id="@+id/shapeableImageView"
+			android:layout_width="100dp"
+			android:layout_height="100dp"
+			android:layout_alignParentEnd="true"
+			android:layout_centerVertical="true"
+			android:src="@drawable/mahdavion"
+			app:shapeAppearanceOverlay="@style/shapeableImageViewRoundedCircle" />
+	</RelativeLayout>
+	
+	<TextView
+		android:id="@+id/nvg_headerView_textView"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_below="@+id/rv_homePageDrawerHeader_mahdavionContainer"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true"
+		android:gravity="center"
+		android:textColor="@android:color/white"
+		android:textSize="20sp"
+		tools:text="محمد مصطفی دستجردی" />
+
+</RelativeLayout>

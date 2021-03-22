@@ -1,7 +1,6 @@
 package ir.androidDev.homeLandDefenders.pages
 
 import android.content.ContentValues
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -45,10 +44,7 @@ class BiographyPageActivity : CustomizableActivity() {
 		getAndShowData()
 		
 		/* back to BiographyActivity */
-		binding.ivBiographyPageActivityBack.setOnClickListener {
-			startActivity(Intent(this, BiographyActivity::class.java))
-			finish()
-		}
+		binding.ivBiographyPageActivityBack.setOnClickListener { finish() }
 		
 		/* save scroll position */
 		binding.fabBiographyPageActivitySaveState.setOnClickListener {
@@ -72,10 +68,7 @@ class BiographyPageActivity : CustomizableActivity() {
 	 * checks that this activity started with all required parameters
 	 */
 	private fun checkIntentParams() {
-		if (!intent.hasExtra(BiographyActivity.BIO_ID)) {
-			startActivity(Intent(this, BiographyActivity::class.java))
-			finish()
-		}
+		if (!intent.hasExtra(BiographyActivity.BIO_ID)) finish()
 	}
 	
 	/**
@@ -113,11 +106,5 @@ class BiographyPageActivity : CustomizableActivity() {
 				binding.nsvBiographyPageActivityMainContainer.smoothScrollTo(0, intent.getIntExtra(BiographyActivity.SCROLL_P, 0), 1500)
 			}, 0)
 		}
-	}
-	
-	override fun onBackPressed() {
-		startActivity(Intent(this, BiographyActivity::class.java))
-		finish()
-		super.onBackPressed()
 	}
 }

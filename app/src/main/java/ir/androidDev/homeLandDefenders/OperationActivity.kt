@@ -31,6 +31,9 @@ class OperationActivity : CustomizableActivity() {
 	/* auto download */
 	private var autoDownload: Boolean? = null
 	
+	/* show load state fab */
+	private var canShowLoadStateFab = false
+	
 	/* fields */
 	companion object {
 		const val BIO_ID = "bio_id"
@@ -85,22 +88,26 @@ class OperationActivity : CustomizableActivity() {
 		/* get data from database */
 		getData()
 		
-		/* check if there is a saved state to load */
-		val cursor = database.getRowBy(Database.TBL_SCROLL, "name", Database.TBL_OPERATION)
-		if (cursor.getIntOrNull(1) == null) binding.fabOperationsActivityLoadState.hide()
-		
 		/* load last saved state */
 		binding.fabOperationsActivityLoadState.setOnClickListener {
+			val cursor = database.getRowBy(Database.TBL_SCROLL, "name", Database.TBL_OPERATION)
+			
 			startActivity(
 				Intent(this, OperationPageActivity::class.java)
 					.putExtra(BIO_ID, cursor.getInt(1))
 					.putExtra(SCROLL_P, cursor.getInt(2))
 			)
-			finish()
 		}
 		
 		/* setup recycler view */
 		setupRecyclerView()
+	}
+	
+	override fun onResume() {
+		super.onResume()
+		
+		/* check if there is a saved state to load */
+		checkLoadStateAvailability()
 	}
 	
 	/**
@@ -133,6 +140,24 @@ class OperationActivity : CustomizableActivity() {
 	}
 	
 	/**
+	 * checks whether a scroll state is available in database and then shows the fab
+	 */
+	private fun checkLoadStateAvailability() {
+		val cursor = database.getRowBy(Database.TBL_SCROLL, "name", Database.TBL_OPERATION)
+		cursor.getIntOrNull(1).let { cond ->
+			binding.fabOperationsActivityLoadState.let {
+				if (cond == null) {
+					canShowLoadStateFab = false
+					it.hide()
+				} else {
+					canShowLoadStateFab = true
+					it.show()
+				}
+			}
+		}
+	}
+	
+	/**
 	 * setups the recycler view
 	 */
 	private fun setupRecyclerView() {
@@ -140,7 +165,6 @@ class OperationActivity : CustomizableActivity() {
 		
 		adapter = OperationItemAdapter(this, operationItems, autoDownload!!) {
 			startActivity(Intent(this, OperationPageActivity::class.java).putExtra(BIO_ID, it))
-			finish()
 		}
 		binding.rvOperationsActivityRecyclerView.adapter = adapter
 		
@@ -151,7 +175,8 @@ class OperationActivity : CustomizableActivity() {
 		binding.rvOperationsActivityRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 			override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
 				super.onScrolled(recyclerView, dx, dy)
-				binding.fabOperationsActivityLoadState.let { if (dy > 0) it.hide() else it.show() }
+				
+				if (canShowLoadStateFab) binding.fabOperationsActivityLoadState.let { if (dy > 0) it.hide() else it.show() }
 			}
 		})
 	}

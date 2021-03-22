@@ -31,6 +31,9 @@ class TestamentActivity : CustomizableActivity() {
 	/* auto download */
 	private var autoDownload: Boolean? = null
 	
+	/* show load state fab */
+	private var canShowLoadStateFab = false
+	
 	/* fields */
 	companion object {
 		const val BIO_ID = "bio_id"
@@ -85,22 +88,26 @@ class TestamentActivity : CustomizableActivity() {
 		/* get data from database */
 		getData()
 		
-		/* check if there is a saved state to load */
-		val cursor = database.getRowBy(Database.TBL_SCROLL, "name", Database.TBL_TESTAMENT)
-		if (cursor.getIntOrNull(1) == null) binding.fabTestamentActivityLoadState.hide()
-		
 		/* load last saved state */
 		binding.fabTestamentActivityLoadState.setOnClickListener {
+			val cursor = database.getRowBy(Database.TBL_SCROLL, "name", Database.TBL_TESTAMENT)
+			
 			startActivity(
 				Intent(this, TestamentPageActivity::class.java)
 					.putExtra(BIO_ID, cursor.getInt(1))
 					.putExtra(SCROLL_P, cursor.getInt(2))
 			)
-			finish()
 		}
 		
 		/* setup the recycler view */
 		setupRecyclerView()
+	}
+	
+	override fun onResume() {
+		super.onResume()
+		
+		/* check if there is a saved state to load */
+		checkLoadStateAvailability()
 	}
 	
 	/**
@@ -134,6 +141,24 @@ class TestamentActivity : CustomizableActivity() {
 	}
 	
 	/**
+	 * checks whether a scroll state is available in database and then shows the fab
+	 */
+	private fun checkLoadStateAvailability() {
+		val cursor = database.getRowBy(Database.TBL_SCROLL, "name", Database.TBL_TESTAMENT)
+		cursor.getIntOrNull(1).let { cond ->
+			binding.fabTestamentActivityLoadState.let {
+				if (cond == null) {
+					canShowLoadStateFab = false
+					it.hide()
+				} else {
+					canShowLoadStateFab = true
+					it.show()
+				}
+			}
+		}
+	}
+	
+	/**
 	 * setups recycler view
 	 */
 	private fun setupRecyclerView() {
@@ -141,7 +166,6 @@ class TestamentActivity : CustomizableActivity() {
 		
 		adapter = TestamentItemAdapter(this, testamentItems, autoDownload!!) {
 			startActivity(Intent(this, TestamentPageActivity::class.java).putExtra(BIO_ID, it))
-			finish()
 		}
 		binding.rvTestamentActivityRecyclerView.adapter = adapter
 		
@@ -152,7 +176,8 @@ class TestamentActivity : CustomizableActivity() {
 		binding.rvTestamentActivityRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 			override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
 				super.onScrolled(recyclerView, dx, dy)
-				binding.fabTestamentActivityLoadState.let { if (dy > 0) it.hide() else it.show() }
+				
+				if (canShowLoadStateFab) binding.fabTestamentActivityLoadState.let { if (dy > 0) it.hide() else it.show() }
 			}
 		})
 	}

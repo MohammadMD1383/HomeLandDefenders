@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import ir.androidDev.homeLandDefenders.R
 import ir.androidDev.homeLandDefenders.connections.Url
 import ir.androidDev.homeLandDefenders.databinding.FragmentContactUsBinding
 
@@ -32,7 +31,7 @@ class ContactUsFragment : Fragment() {
 	private fun setupLinks() {
 		binding!!.ivContactUsFragmentTelegram.setOnClickListener { openLink(Url.let { it.LINK + it.TELEGRAM }) }
 		binding!!.ivContactUsFragmentSoroush.setOnClickListener { openLink(Url.let { it.LINK + it.SOROUSH }) }
-		binding!!.ivContactUsFragmentGap.setOnClickListener { openLink(Url.let { it.LINK + it.GAP }) }
+		binding!!.ivContactUsFragmentInstagram.setOnClickListener { openLink(Url.let { it.LINK + it.INSTAGRAM }) }
 	}
 	
 	/**

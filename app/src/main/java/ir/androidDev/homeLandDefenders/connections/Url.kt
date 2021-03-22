@@ -34,7 +34,7 @@ object Url {
 	/* social media */
 	const val TELEGRAM = "telegram/"
 	const val SOROUSH = "soroush/"
-	const val GAP = "gap/"
+	const val INSTAGRAM = "instagram/"
 	
 	/* option values */
 	const val SEND_COMMENT = "can_send_comment/"

@@ -1,7 +1,6 @@
 package ir.androidDev.homeLandDefenders.pages
 
 import android.content.ContentValues
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -45,10 +44,7 @@ class OperationPageActivity : CustomizableActivity() {
 		getAndShowData()
 		
 		/* back to OperationActivity */
-		binding.ivOperationPageActivityBack.setOnClickListener {
-			startActivity(Intent(this, OperationActivity::class.java))
-			finish()
-		}
+		binding.ivOperationPageActivityBack.setOnClickListener { finish() }
 		
 		/* save scroll position */
 		binding.fabOperationPageActivitySaveState.setOnClickListener {
@@ -73,10 +69,7 @@ class OperationPageActivity : CustomizableActivity() {
 	 * checks that this activity started with all required parameters
 	 */
 	private fun checkIntentParams() {
-		if (!intent.hasExtra(OperationActivity.BIO_ID)) {
-			startActivity(Intent(this, OperationActivity::class.java))
-			finish()
-		}
+		if (!intent.hasExtra(OperationActivity.BIO_ID)) finish()
 	}
 	
 	/**
@@ -111,11 +104,5 @@ class OperationPageActivity : CustomizableActivity() {
 				binding.nsvOperationPageActivityMainContainer.smoothScrollTo(0, intent.getIntExtra(OperationActivity.SCROLL_P, 0), 1500)
 			}, 0)
 		}
-	}
-	
-	override fun onBackPressed() {
-		startActivity(Intent(this, OperationActivity::class.java))
-		finish()
-		super.onBackPressed()
 	}
 }
