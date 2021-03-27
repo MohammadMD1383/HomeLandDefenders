@@ -24,7 +24,9 @@
 		<activity android:name=".TestamentActivity" />
 		<activity android:name=".BiographyActivity" />
 		<activity android:name=".IntroductionActivity" />
-		<activity android:name=".HomePageActivity" />
+		<activity
+			android:name=".HomePageActivity"
+			android:launchMode="singleTask" />
 		<activity
 			android:name=".MainActivity"
 			android:theme="@style/MainActivity">

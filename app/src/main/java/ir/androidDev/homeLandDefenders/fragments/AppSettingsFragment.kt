@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.widget.NestedScrollView
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import ir.androidDev.homeLandDefenders.R
 import ir.androidDev.homeLandDefenders.database.Database
@@ -21,7 +23,7 @@ class AppSettingsFragment : Fragment() {
 	
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		if (binding == null) {
-			binding = FragmentAppSettingsBinding.inflate(inflater, container, false)
+			binding = DataBindingUtil.inflate(inflater, R.layout.fragment_app_settings, container, false)
 			
 			/* database */
 			val database = Database(activity!!.applicationContext)
@@ -32,6 +34,9 @@ class AppSettingsFragment : Fragment() {
 			
 			/* load settings */
 			loadSettings(database)
+			
+			/* hides/shows the fab save button on scroll */
+			setOnScrollAutoHideSaveButton()
 			
 			/* on save click listener */
 			setOnSaveClickListener(database)
@@ -101,19 +106,34 @@ class AppSettingsFragment : Fragment() {
 		)
 		
 		val cursor4 = db.getRowBy(Database.TBL_SETTINGS, "name", "auto_download")
+		if (cursor4.getInt(1) == 0) binding!!.schAppSettingsFragmentAutoDownload.isChecked = false
 		
-		if (cursor4.getInt(1) == 0) {
-			binding!!.schAppSettingsFragmentAutoDownload.isChecked = false
-		}
+		val cursor5 = db.getRowBy(Database.TBL_SETTINGS, "name", "app_update")
+		if (cursor5.getInt(1) == 0) binding!!.schAppSettingsFragmentAppUpdate.isChecked = false
+		
+		val cursor6 = db.getRowBy(Database.TBL_SETTINGS, "name", "new_data")
+		if (cursor6.getInt(1) == 0) binding!!.schAppSettingsFragmentNewData.isChecked = false
+	}
+	
+	/**
+	 * shows/hides the fab save button based on page scroll
+	 */
+	private fun setOnScrollAutoHideSaveButton() {
+		binding!!.nsvAppSettingsFragmentScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+			binding!!.fabAppSettingsFragmentSave.let {
+				if (scrollY > oldScrollY) it.hide() else it.show()
+			}
+		})
 	}
 	
 	/**
 	 * sets the action of save button
 	 */
 	private fun setOnSaveClickListener(db: Database) {
-		binding!!.btnAppSettingsFragmentSave.setOnClickListener {
+		binding!!.fabAppSettingsFragmentSave.setOnClickListener {
 			if (binding!!.editTextTextPersonName.text.trim().isEmpty()) {
-				Toast.makeText(activity!!.applicationContext, getString(R.string.app_settings_string_please_fill_nick_name), Toast.LENGTH_SHORT).show()
+				Toast.makeText(activity!!.applicationContext, getString(R.string.app_settings_string_please_fill_nick_name), Toast.LENGTH_SHORT)
+					.show()
 				return@setOnClickListener
 			}
 			
@@ -121,16 +141,22 @@ class AppSettingsFragment : Fragment() {
 			val cv2 = ContentValues()
 			val cv3 = ContentValues()
 			val cv4 = ContentValues()
+			val cv5 = ContentValues()
+			val cv6 = ContentValues()
 			
 			cv1.put("value", binding!!.editTextTextPersonName.text.toString())
 			cv2.put("value", binding!!.spinAppSettingsFragmentFontSpinner.selectedItem.toString())
 			cv3.put("value", binding!!.spinAppSettingsFragmentFontSizeSpinner.selectedItem.toString())
 			cv4.put("value", binding!!.schAppSettingsFragmentAutoDownload.isChecked.let { if (it) 1 else 0 })
+			cv5.put("value", binding!!.schAppSettingsFragmentAppUpdate.isChecked.let { if (it) 1 else 0 })
+			cv6.put("value", binding!!.schAppSettingsFragmentNewData.isChecked.let { if (it) 1 else 0 })
 			
 			db.updateBy(Database.TBL_SETTINGS, cv1, "name", "nick_name")
 			db.updateBy(Database.TBL_SETTINGS, cv2, "name", "font_family")
 			db.updateBy(Database.TBL_SETTINGS, cv3, "name", "font_size")
 			db.updateBy(Database.TBL_SETTINGS, cv4, "name", "auto_download")
+			db.updateBy(Database.TBL_SETTINGS, cv5, "name", "app_update")
+			db.updateBy(Database.TBL_SETTINGS, cv6, "name", "new_data")
 			
 			Util(context!!).makeAlertDialog(
 				getString(R.string.app_settings_string_title),

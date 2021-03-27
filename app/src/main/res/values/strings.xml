@@ -25,10 +25,10 @@
 	<string name="operations_string_bottom">ما به شهدا مدیونیم</string>
 	<string name="drawer_string_download_content">دریافت اطلاعات</string>
 	<string name="drawer_string_repair_content">تعمیر اطلاعات</string>
+	<string name="drawer_string_help">راهنما</string>
 	<string name="app_settings_string_nick_name">نام مستعار</string>
 	<string name="app_settings_string_font">فونت نرم افزار</string>
 	<string name="app_settings_string_font_size">اندازه قلم</string>
-	<string name="app_settings_string_save">ذخیره</string>
 	<string name="about_us_string_in_the_name_of_god">به نام خدا</string>
 	<string name="veterans_string_title">جانبازان گرانقدر</string>
 	<string name="veterans_string_bottom">ما ملت شهادتیم</string>
@@ -47,7 +47,7 @@
 	<string name="util_dialog_negative_button">لغو</string>
 	<string name="app_settings_string_please_choose_nick_name">لطفا یک نام مستعار برای خود انتخاب کنید</string>
 	<string name="app_settings_string_please_restart_app">برای اعمال کامل تنظیمات انجام شده نرم افزار را دوباره اجرا کنید</string>
-	<string name="app_settings_string_auto_pic_download">دانلود خودکار تصاویر</string>
+	<string name="app_settings_string_auto_pic_download">بارگیری خودکار تصاویر</string>
 	<string name="home_page_string_check_status">بررسی وضعیت…</string>
 	<string name="home_page_string_comment_not_possible">اکنون امکان ارسال نظر وجود ندارد</string>
 	<string name="home_page_string_add_content_not_possible">اکنون امکان ارسال مطلب وجود ندارد</string>
@@ -61,6 +61,7 @@
 	<string name="home_page_download_done">بارگیری انجام شد</string>
 	<string name="suggest_string_share_with">اشتراک لینک برنامه با:</string>
 	<string name="suggest_string_share_text">تو هم مثل من نرم افزار مدافعان وطن رو همین الان دانلود کن و با شهدا و نحوه زندگی اون ها آشنا شو! دانلود از:\n</string>
+	<string name="social_media_id">Mahdavion313_ir</string>
 	<string name="biography_adapter_age">سن: </string>
 	<string name="biography_string_dead_body_not_found">مفقودالاثر</string>
 	
@@ -92,6 +93,120 @@
 	<string name="veterans_full_text">در بین مردم عزیزانی هستند که به لقب شهید زنده آنها را میشناسیم.\n\nمگر میشود فراموششان کرد؟\n\nآنهایی که رفقای خود را پر پر دیدند.\nآنهایی که هر روز صحنه جنگ برایشان تداعی میشود.\nجانباز شدند و حسرتی دارند آشکار\n\nما به شهیدان زنده هم مدیونیم و از آنها تشکر و قدر دانی میکنیم\n\nو در ادامه سعی بر انتشار مصاحبه های گرفته شده از جانبازان عزیز داریم</string>
 	<string name="sure_to_repair_content">با انجام این عمل تمام متن های بارگیری شده پاک، و مجددا بارگیری خواهند شد.\nدقت داشته باشید که عکس های بارگیری شده پاک نخواهند شد و نیازی به بارگیری مجدد آنها نخواهد بود.\nاز ادامه کار مطمئن هستید؟</string>
 	<string name="sure_to_download_content">با انجام این عمل ابتدا وجود متون جدید بررسی شده و سپس در صورت وجود داشتن بارگیری خواهند شد.\nدقت داشته باشید که در صورتی که بعد از انجام این عمل هیچ متن جدیدی برای شما اضافه نشد بدین معناست که متن جدیدی وجود نداشته است.\nدر انجام این عملیات هیچ تصویری بارگیری نخواهد شد.\nآیا مایل به ادامه هستید؟</string>
-	<string name="font_warning">*** توجه ***\nفونت ایران‌سنس استفاده شده در این برنامه از سوی سازنده خریداری شده است و برای استفاده شما در این نرم افزار رایگان است.\nبرای استفاده شخصی خودتان باید فونت را از fontiran.com خریداری کنید.\nهرگونه استفاده از فونت استفاده شده در این نرم افزار شرعاً و قانونا حرام است.</string>
-	<string name="social_media_id">Mahdavion313_ir</string>
+	
+	<!-- settings -->
+	<string name="settings_hint_nick_name"><![CDATA[
+		<b>نام مستعار</b>
+		شما به عنوان نام فرستنده نظرات و مطالب مورد استفاده قرار خواهد گرفت.
+	]]></string>
+	
+	<string name="settings_hint_font_family"><![CDATA[
+		<b>فونت</b>
+		جهت نمایش متن‌ها در این نرم‌افزار
+	]]></string>
+	
+	<string name="settings_hint_font_size"><![CDATA[
+		اندازه متن‌های نرم افزار
+		<br/>
+		<b>اندازه متن‌های صفحه‌ی اصلی، پنل کشویی و لیست اسامی تغییر نخواهند کرد</b>
+	]]></string>
+	
+	<string name="settings_hint_auto_download"><![CDATA[
+		در صورت
+		<b>فعال</b>
+		بودن این گزینه در هنگام پیمایش صفحات و لیست‌ها، عکس‌ها به صورت خودکار بارگیری می‌شوند.
+	]]></string>
+	
+	<string name="settings_hint_app_update"><![CDATA[
+		در صورت
+		<b>فعال</b>
+		بودن این گزینه، به صورت خودکار روزی یک بار وجود نسخه جدید بررسی شده و در صورت وجود، اعلانی مبنی بر به روز رسانی نرم افزار دریافت خواهید کرد.
+		<br/>
+		<b>این فرایند نیازمند اینترنت است</b>
+	]]></string>
+	
+	<string name="settings_hint_new_data"><![CDATA[
+		در صورت
+		<b>فعال</b>
+		بودن این گزینه، روزی یک بار وجود محتوای جدید بررسی شده و در صورت وجود، اعلانی مبنی بر به روز رسانی اطلاعات دریافت خواهید کرد.
+		<br/>
+		<b>این فرایند نیازمند اینترنت است</b>
+	]]></string>
+	
+	<string name="font_warning"><![CDATA[
+		<div style=\"text-align: center\"><b><font color=\"red\">توجه</font></b></div>
+		فونت ایران‌سنس استفاده شده در این برنامه از سوی سازنده خریداری شده است و برای استفاده شما در این نرم افزار رایگان است.
+		<br/>
+		برای استفاده شخصی خودتان باید فونت را از
+		<a href=\"https://fontiran.com\">فونت ایران</a>
+		خریداری کنید.
+		<br/>
+		هرگونه استفاده از فونت استفاده شده در این نرم افزار شرعاً و قانونا حرام است.
+	]]></string>
+	
+	<string name="settings_section_general">عمومی</string>
+	<string name="settings_section_notifications">اعلان‌ها</string>
+	<string name="settings_switch_text_app_update">به روز رسانی نرم‌افزار</string>
+	<string name="settings_switch_text_new_data">محتوای جدید</string>
+	
+	<!-- help -->
+	<string-array name="help_titles">
+		<item>صفحه‌ی اصلی</item>
+		<item>منوی کشویی</item>
+		<item>لیست اسامی</item>
+		<item>صفحه‌ی خواندن</item>
+		<item>تاریخچه و جزئیات جنگ</item>
+	</string-array>
+	
+	<string-array name="help_texts">
+		<item><![CDATA[
+			باز کردن منوی کشویی با کلیک بر روی آیکون
+			<b>منو</b>
+			یا کشیدن انگشت به سمت چپ
+		]]></item>
+		<item><![CDATA[
+			<b>۱.</b>
+			ارسال انتقادات و پیشنهادات شما عزیزان. (در صورت امکان)
+			<br/>
+			<b>۲.</b>
+			ارسال مطالب شما عزیزان درباره شهدا یا جانبازانی که می‌شناسید. (در صورت امکان)
+			<br/>
+			<b>۳.</b>
+			دریافت اطلاعات جدید در صورت وجود داشتن.
+			<br/>
+			<b>۴.</b>
+			پاک کردن تمامی اطلاعات و بارگیری مجدد.
+		]]></item>
+		<item><![CDATA[
+			<b>۱.</b>
+			بازگشت
+			<br/>
+			<b>۲.</b>
+			جستجو
+			<br/>
+			<b>۳.</b>
+			بارگیری تصویر (در صورت
+			<b>خاموش</b>
+			بودن بارگیری خودکار)
+			<br/>
+			<b>۴.</b>
+			رفتن به صفحه ذخیره شده
+		]]></item>
+		<item><![CDATA[
+			<b>۱.</b>
+			بارگیری عکس (در صورت
+			<b>خاموش</b>
+			بودن بارگیری خودکار)
+			<br/>
+			<b>۲.</b>
+			ذخیره صفحه (و مقدار پیمایش شده)
+		]]></item>
+		<item><![CDATA[
+			<b>۱.</b>
+			رفتن به مقدار پیمایش شده
+			<br/>
+			<b>۲.</b>
+			ذخیره مقدار پیمایش شده
+		]]></item>
+	</string-array>
 </resources>

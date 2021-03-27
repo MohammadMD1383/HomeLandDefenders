@@ -6,7 +6,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class Database(context: Context?) : SQLiteOpenHelper(context, "hld.db", null, 1) {
+class Database(context: Context?) : SQLiteOpenHelper(context, "hld.db", null, 2) {
 	
 	/**
 	 * the class fields
@@ -17,6 +17,7 @@ class Database(context: Context?) : SQLiteOpenHelper(context, "hld.db", null, 1)
 		const val TBL_OPERATION = "operation"
 		const val TBL_SCROLL = "scroll"
 		const val TBL_SETTINGS = "settings"
+		
 		const val WAR_HISTORY = "war_history"
 	}
 	
@@ -43,16 +44,35 @@ class Database(context: Context?) : SQLiteOpenHelper(context, "hld.db", null, 1)
 	 * upgrades database
 	 */
 	override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-		db!!.execSQL("DROP TABLE IF EXISTS $TBL_BIOGRAPHY")
-		db.execSQL("DROP TABLE IF EXISTS $TBL_TESTAMENT")
-		db.execSQL("DROP TABLE IF EXISTS $TBL_OPERATION")
-		db.execSQL("DROP TABLE IF EXISTS $TBL_SCROLL")
-		db.execSQL("DROP TABLE IF EXISTS $TBL_SETTINGS")
-		onCreate(db)
+		when (true) {
+			/* migration from v1 to v2 */
+			oldVersion == 1 && newVersion == 2 -> {
+				val cv = ContentValues()
+				val settingsRows = arrayOf("app_update", "new_data")
+				
+				settingsRows.forEach {
+					cv.put("name", it)
+					cv.put("value", "1")
+					
+					db!!.insert(TBL_SETTINGS, null, cv)
+				}
+			}
+			/* no migration */
+			else -> {
+				db!!.execSQL("DROP TABLE IF EXISTS $TBL_BIOGRAPHY")
+				db.execSQL("DROP TABLE IF EXISTS $TBL_TESTAMENT")
+				db.execSQL("DROP TABLE IF EXISTS $TBL_OPERATION")
+				db.execSQL("DROP TABLE IF EXISTS $TBL_SCROLL")
+				db.execSQL("DROP TABLE IF EXISTS $TBL_SETTINGS")
+				onCreate(db)
+			}
+		}
 	}
 	
 	/**
 	 * create rows for pre defined data
+	 *
+	 * @param db database
 	 */
 	private fun createPreDefinedRows(db: SQLiteDatabase?) {
 		/* scroll saves */
@@ -81,9 +101,15 @@ class Database(context: Context?) : SQLiteOpenHelper(context, "hld.db", null, 1)
 		}
 		
 		cv.clear()
-		cv.put("name", "auto_download")
-		cv.put("value", "1")
-		db!!.insert(TBL_SETTINGS, null, cv)
+		
+		val settingsRows2 = arrayOf("auto_download", "app_update", "new_data")
+		
+		settingsRows2.forEach {
+			cv.put("name", it)
+			cv.put("value", "1")
+			
+			db!!.insert(TBL_SETTINGS, null, cv)
+		}
 	}
 	
 	/**

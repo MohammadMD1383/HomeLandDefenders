@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 30
@@ -9,8 +10,8 @@ android {
         applicationId "ir.androidDev.HomeLandDefenders"
         minSdkVersion 17
         targetSdkVersion 30
-        versionCode 13
-        versionName "1.3.30"
+        versionCode 14
+        versionName "1.5.40"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -18,6 +19,7 @@ android {
 
     buildFeatures {
         viewBinding true
+        dataBinding true
     }
 
     kotlinOptions {
@@ -42,4 +44,5 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.android.volley:dc-volley:1.1.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'androidx.work:work-runtime-ktx:2.5.0'
 }

@@ -1,6 +1,7 @@
 package ir.androidDev.homeLandDefenders.adapters
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -14,6 +15,8 @@ import com.squareup.picasso.Picasso
 import ir.androidDev.homeLandDefenders.R
 import ir.androidDev.homeLandDefenders.dataModels.BiographyItem
 import ir.androidDev.homeLandDefenders.databinding.RecyclerItemBiographyCardBinding
+import java.util.*
+import kotlin.collections.ArrayList
 
 class BiographyItemAdapter(
 	private val context: Context,
@@ -25,9 +28,16 @@ class BiographyItemAdapter(
 	/* items copy list */
 	private val biographyItemsCopy: MutableList<BiographyItem> = ArrayList()
 	
+	/* placeholders */
+	private val placeholder: Drawable
+	private val dlPlaceholder: Drawable
+	
 	/* get a copy of items list */
 	init {
 		biographyItemsCopy.addAll(biographyItems)
+		
+		placeholder = ResourcesCompat.getDrawable(context.resources, R.drawable.ic_baseline_photo_24, null)!!
+		dlPlaceholder = ResourcesCompat.getDrawable(context.resources, R.drawable.ic_round_arrow_circle_down_24, null)!!
 	}
 	
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,36 +50,52 @@ class BiographyItemAdapter(
 		/* on item click handling */
 		holder.view.setOnClickListener { onViewClick(biographyItem.id!!) }
 		
+		/* on image click download */
+		if (!canDownloadPhoto) holder.photo.setOnClickListener {
+			if (!biographyItem.imageLoaded) {
+				Picasso.get().load(biographyItem.imgUrl).placeholder(placeholder)
+					.resizeDimen(R.dimen.thumbnail_size, R.dimen.thumbnail_size).into(holder.photo, object : Callback {
+						override fun onSuccess() {
+							biographyItem.imageLoaded = true
+						}
+						
+						override fun onError(e: Exception?) {
+							holder.photo.setImageDrawable(dlPlaceholder)
+						}
+					})
+			}
+		}
+		
 		/* other views */
 		holder.name.text = biographyItem.name
 		holder.birth.text = biographyItem.birth
 		
 		/* change the "----" to "مفقودالاثر" */
-		holder.death.text = biographyItem.death.let { if (it.equals("----")) context.getString(R.string.biography_string_dead_body_not_found) else it }
+		holder.death.text =
+			biographyItem.death.let { if (it.equals("----")) context.getString(R.string.biography_string_dead_body_not_found) else it }
 		holder.rank.text = biographyItem.rank
 		
 		/* add prefix to age */
 		val mAge = context.getString(R.string.biography_adapter_age) + biographyItem.age
 		holder.age.text = mAge
 		
-		/* generate image placeholder */
-		val placeholder = ResourcesCompat.getDrawable(context.resources, R.drawable.ic_baseline_photo_24, null)!!
-		
 		/* if the image url is "flower" it will be loaded locally and picasso will be skipped */
-		if (biographyItem.imgUrl!!.toLowerCase() == "flower") {
+		if (biographyItem.imgUrl!!.toLowerCase(Locale.ENGLISH) == "flower") {
 			holder.photo.setImageDrawable(ResourcesCompat.getDrawable(context.resources, R.drawable.flower, null))
 			return
 		}
 		
 		/* sets photo if cached else downloads it and then shows */
 		Picasso.get().load(biographyItem.imgUrl).networkPolicy(NetworkPolicy.OFFLINE).placeholder(placeholder)
-			.resizeDimen(R.dimen.thumbnail_size, R.dimen.thumbnail_size)
-			.into(holder.photo, object : Callback {
-				override fun onSuccess() {}
+			.resizeDimen(R.dimen.thumbnail_size, R.dimen.thumbnail_size).into(holder.photo, object : Callback {
+				override fun onSuccess() {
+					biographyItem.imageLoaded = true
+				}
+				
 				override fun onError(e: Exception?) {
-					if (canDownloadPhoto)
-						Picasso.get().load(biographyItem.imgUrl).placeholder(placeholder)
-							.resizeDimen(R.dimen.thumbnail_size, R.dimen.thumbnail_size).into(holder.photo)
+					if (canDownloadPhoto) Picasso.get().load(biographyItem.imgUrl).placeholder(placeholder)
+						.resizeDimen(R.dimen.thumbnail_size, R.dimen.thumbnail_size).into(holder.photo)
+					else holder.photo.setImageDrawable(dlPlaceholder)
 				}
 			})
 	}

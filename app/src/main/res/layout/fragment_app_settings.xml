@@ -1,108 +1,206 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:background="@android:color/white"
-	android:padding="16dp"
-	tools:context="ir.androidDev.homeLandDefenders.fragments.AppSettingsFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
 	
-	<ScrollView
+	<FrameLayout
 		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+		android:layout_height="match_parent"
+		android:background="@android:color/white"
+		android:padding="16dp"
+		tools:context="ir.androidDev.homeLandDefenders.fragments.AppSettingsFragment">
 		
-		<LinearLayout
+		<androidx.core.widget.NestedScrollView
+			android:id="@+id/nsv_appSettingsFragment_scrollView"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="vertical">
+			android:layout_height="match_parent">
 			
-			<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center_horizontal"
-				android:text="@string/app_settings_string_nick_name" />
-			
-			<EditText
-				android:id="@+id/editTextTextPersonName"
+			<LinearLayout
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="8dp"
-				android:background="@drawable/edit_text_background_gray_200"
-				android:gravity="center"
-				android:hint="@string/app_settings_string_nick_name"
-				android:inputType="textPersonName"
-				android:maxLength="30"
-				android:padding="8dp" />
-			
-			<include layout="@layout/separator_horizontal" />
-			
-			<LinearLayout
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center_horizontal"
-				android:orientation="horizontal">
+				android:orientation="vertical">
 				
 				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_gravity="center_vertical"
-					android:layout_marginEnd="8dp"
-					android:text="@string/app_settings_string_font" />
-				
-				<androidx.appcompat.widget.AppCompatSpinner
-					android:id="@+id/spin_appSettingsFragment_fontSpinner"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_gravity="center_vertical" />
-			</LinearLayout>
-			
-			<include layout="@layout/separator_horizontal" />
-			
-			<LinearLayout
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center_horizontal"
-				android:orientation="horizontal">
-				
-				<TextView
-					
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_gravity="center_vertical"
-					android:layout_marginEnd="8dp"
-					android:text="@string/app_settings_string_font_size" />
-				
-				<androidx.appcompat.widget.AppCompatSpinner
-					android:id="@+id/spin_appSettingsFragment_fontSizeSpinner"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:layout_gravity="center_vertical" />
+					android:layout_marginBottom="8dp"
+					android:background="@drawable/settings_section_header_bg"
+					android:gravity="center"
+					android:text="@string/settings_section_general"
+					android:textStyle="bold" />
+				
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_horizontal"
+					android:text="@string/app_settings_string_nick_name" />
+				
+				<EditText
+					android:id="@+id/editTextTextPersonName"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="8dp"
+					android:layout_marginBottom="8dp"
+					android:background="@drawable/edit_text_background_gray_200"
+					android:gravity="center"
+					android:hint="@string/app_settings_string_nick_name"
+					android:inputType="textPersonName"
+					android:maxLength="30"
+					android:padding="8dp" />
+				
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:background="@drawable/setting_hint_text_background"
+					android:textColor="@color/material_gray_500"
+					android:textSize="14sp"
+					app:htmlText="@{@string/settings_hint_nick_name}" />
+				
+				<RelativeLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_horizontal"
+					android:layout_marginTop="8dp"
+					android:layout_marginBottom="8dp">
+					
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_alignParentStart="true"
+						android:layout_centerVertical="true"
+						android:layout_gravity="center_vertical"
+						android:layout_marginEnd="8dp"
+						android:layout_toStartOf="@id/spin_appSettingsFragment_fontSpinner"
+						android:text="@string/app_settings_string_font" />
+					
+					<androidx.appcompat.widget.AppCompatSpinner
+						android:id="@+id/spin_appSettingsFragment_fontSpinner"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_alignParentEnd="true"
+						android:layout_centerVertical="true" />
+				</RelativeLayout>
+				
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:background="@drawable/setting_hint_text_background"
+					android:textColor="@color/material_gray_500"
+					android:textSize="14sp"
+					app:htmlText="@{@string/settings_hint_font_family}" />
+				
+				<RelativeLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_horizontal"
+					android:layout_marginTop="8dp"
+					android:layout_marginBottom="8dp">
+					
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_alignParentStart="true"
+						android:layout_centerVertical="true"
+						android:layout_gravity="center_vertical"
+						android:layout_marginEnd="8dp"
+						android:layout_toStartOf="@id/spin_appSettingsFragment_fontSizeSpinner"
+						android:text="@string/app_settings_string_font_size" />
+					
+					<androidx.appcompat.widget.AppCompatSpinner
+						android:id="@+id/spin_appSettingsFragment_fontSizeSpinner"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_alignParentEnd="true"
+						android:layout_centerVertical="true" />
+				</RelativeLayout>
+				
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:background="@drawable/setting_hint_text_background"
+					android:textColor="@color/material_gray_500"
+					android:textSize="14sp"
+					app:htmlText="@{@string/settings_hint_font_size}" />
+				
+				<androidx.appcompat.widget.SwitchCompat
+					android:id="@+id/sch_appSettingsFragment_autoDownload"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:layout_marginTop="8dp"
+					android:layout_marginBottom="8dp"
+					android:checked="true"
+					android:text="@string/app_settings_string_auto_pic_download" />
+				
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:background="@drawable/setting_hint_text_background"
+					android:textColor="@color/material_gray_500"
+					android:textSize="14sp"
+					app:htmlText="@{@string/settings_hint_auto_download}" />
+				
+				<include layout="@layout/separator_horizontal" />
+				
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="8dp"
+					android:background="@drawable/settings_section_header_bg"
+					android:gravity="center"
+					android:text="@string/settings_section_notifications" />
+				
+				<androidx.appcompat.widget.SwitchCompat
+					android:id="@+id/sch_appSettingsFragment_appUpdate"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:checked="true"
+					android:text="@string/settings_switch_text_app_update" />
+				
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="8dp"
+					android:layout_marginBottom="8dp"
+					android:background="@drawable/setting_hint_text_background"
+					android:textColor="@color/material_gray_500"
+					android:textSize="14sp"
+					app:htmlText="@{@string/settings_hint_app_update}" />
+				
+				<androidx.appcompat.widget.SwitchCompat
+					android:id="@+id/sch_appSettingsFragment_newData"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:checked="true"
+					android:text="@string/settings_switch_text_new_data" />
+				
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="8dp"
+					android:background="@drawable/setting_hint_text_background"
+					android:textColor="@color/material_gray_500"
+					android:textSize="14sp"
+					app:htmlText="@{@string/settings_hint_new_data}" />
+				
+				<include layout="@layout/separator_horizontal" />
+				
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:background="@drawable/setting_hint_text_background"
+					android:textColor="@color/material_gray_500"
+					android:textSize="14sp"
+					app:enableLinkMovementMethod="@{true}"
+					app:htmlText="@{@string/font_warning}" />
 			</LinearLayout>
-			
-			<include layout="@layout/separator_horizontal" />
-			
-			<androidx.appcompat.widget.SwitchCompat
-				android:id="@+id/sch_appSettingsFragment_autoDownload"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:checked="true"
-				android:text="@string/app_settings_string_auto_pic_download" />
-			
-			<include layout="@layout/separator_horizontal" />
-			
-			<Button
-				android:id="@+id/btn_appSettingsFragment_save"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center_horizontal"
-				android:text="@string/app_settings_string_save" />
-			
-			<include layout="@layout/separator_horizontal" />
-			
-			<TextView
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:text="@string/font_warning"
-				android:textColor="@color/material_gray_500" />
-		</LinearLayout>
-	</ScrollView>
-</FrameLayout>
+		</androidx.core.widget.NestedScrollView>
+		
+		<com.google.android.material.floatingactionbutton.FloatingActionButton
+			android:id="@+id/fab_appSettingsFragment_save"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="bottom|end"
+			android:layout_marginEnd="16dp"
+			android:layout_marginBottom="16dp"
+			app:srcCompat="@drawable/ic_baseline_check_24" />
+	</FrameLayout>
+</layout>

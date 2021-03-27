@@ -68,7 +68,7 @@ class CommentsFragment : Fragment() {
 				@Throws(AuthFailureError::class)
 				override fun getHeaders(): MutableMap<String, String> {
 					val params: MutableMap<String, String> = HashMap()
-					params["Content-Type"] = "application/x-www-form-urlencoded"
+					params["Content-Type"] = ContentManager.POST_HEADER
 					params.putAll(ContentManager.getCookie(context!!))
 					return params
 				}

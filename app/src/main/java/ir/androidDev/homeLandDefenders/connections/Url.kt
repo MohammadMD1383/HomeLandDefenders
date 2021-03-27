@@ -5,25 +5,32 @@ package ir.androidDev.homeLandDefenders.connections
  */
 object Url {
 	/* cookie server */
-	const val COOKIE_SERVER = "http://hld-repo.ihweb.ir/"
+	const val SERVER = "http://hld-repo.ihweb.ir/"
 	
 	/* repositories */
-	const val REPOSITORY_V1 = "http://hld-repo.ihweb.ir/api/v1/"
+	const val REPOSITORY_V1 = "${SERVER}api/v1/"
+	
+	/* app info */
+	const val APP_INFO = "app-info/"
 	
 	/* links redirect */
-	const val LINK = "http://hld-repo.ihweb.ir/links/channel/"
-	const val DOWNLOAD = "http://hld-repo.ihweb.ir/links/download/app/"
+	const val LINK = "${SERVER}links/channel/"
+	const val DOWNLOAD = "${SERVER}links/download/app/"
+	
+	/* app version */
+	const val APP_VERSION_CODE = "${SERVER + APP_INFO}version-code"
 	
 	/* option availability */
-	const val OPTIONS = "http://hld-repo.ihweb.ir/options/get/"
+	const val OPTIONS = "${SERVER}options/get/"
 	
 	/* send data */
-	const val COMMENT = "http://hld-repo.ihweb.ir/send-comment/"
-	const val CONTENT = "http://hld-repo.ihweb.ir/send-content/"
+	const val COMMENT = "${SERVER}send-comment/"
+	const val CONTENT = "${SERVER}send-content/"
 	
 	/* modes */
 	const val GET = "get-data/"
 	const val NEW = "new-data/"
+	const val CHECK_NEW = "check-new-data/"
 	
 	/* items */
 	const val BIOGRAPHY = "biography/"

@@ -1,6 +1,7 @@
 package ir.androidDev.homeLandDefenders.adapters
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -14,6 +15,8 @@ import com.squareup.picasso.Picasso
 import ir.androidDev.homeLandDefenders.R
 import ir.androidDev.homeLandDefenders.dataModels.TestamentItem
 import ir.androidDev.homeLandDefenders.databinding.RecyclerItemTestamentCardBinding
+import java.util.*
+import kotlin.collections.ArrayList
 
 class TestamentItemAdapter(
 	private val context: Context,
@@ -25,9 +28,16 @@ class TestamentItemAdapter(
 	/* items copy list */
 	private val testamentItemsCopy: MutableList<TestamentItem> = ArrayList()
 	
+	/* placeholders */
+	private val placeholder: Drawable
+	private val dlPlaceholder: Drawable
+	
 	/* copy the items */
 	init {
 		testamentItemsCopy.addAll(testamentItems)
+		
+		placeholder = ResourcesCompat.getDrawable(context.resources, R.drawable.ic_baseline_photo_24, null)!!
+		dlPlaceholder = ResourcesCompat.getDrawable(context.resources, R.drawable.ic_round_arrow_circle_down_24, null)!!
 	}
 	
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,14 +50,27 @@ class TestamentItemAdapter(
 		/* on item click handling */
 		holder.view.setOnClickListener { onViewClick(testamentItem.id!!) }
 		
+		/* on image click download */
+		if (!canDownloadPhoto) holder.photo.setOnClickListener {
+			if (!testamentItem.imageLoaded) {
+				Picasso.get().load(testamentItem.imgUrl).placeholder(placeholder)
+					.resizeDimen(R.dimen.thumbnail_size, R.dimen.thumbnail_size).into(holder.photo, object : Callback {
+						override fun onSuccess() {
+							testamentItem.imageLoaded = true
+						}
+						
+						override fun onError(e: Exception?) {
+							holder.photo.setImageDrawable(dlPlaceholder)
+						}
+					})
+			}
+		}
+		
 		/* other views */
 		holder.name.text = testamentItem.name
 		
-		/* generate image placeholder */
-		val placeholder = ResourcesCompat.getDrawable(context.resources, R.drawable.ic_baseline_photo_24, null)!!
-		
 		/* if the image url is "flower" it will be loaded locally and picasso will be skipped */
-		if (testamentItem.imgUrl!!.toLowerCase() == "flower") {
+		if (testamentItem.imgUrl!!.toLowerCase(Locale.ENGLISH) == "flower") {
 			holder.photo.setImageDrawable(ResourcesCompat.getDrawable(context.resources, R.drawable.flower, null))
 			return
 		}
@@ -56,12 +79,14 @@ class TestamentItemAdapter(
 		Picasso.get().load(testamentItem.imgUrl).networkPolicy(NetworkPolicy.OFFLINE).placeholder(placeholder)
 			.resizeDimen(R.dimen.thumbnail_size, R.dimen.thumbnail_size)
 			.into(holder.photo, object : Callback {
-				override fun onSuccess() {}
+				override fun onSuccess() {
+					testamentItem.imageLoaded = true
+				}
+				
 				override fun onError(e: Exception?) {
-					if (canDownloadPhoto)
-						Picasso.get().load(testamentItem.imgUrl).placeholder(placeholder)
-							.resizeDimen(R.dimen.thumbnail_size, R.dimen.thumbnail_size)
-							.into(holder.photo)
+					if (canDownloadPhoto) Picasso.get().load(testamentItem.imgUrl).placeholder(placeholder)
+						.resizeDimen(R.dimen.thumbnail_size, R.dimen.thumbnail_size).into(holder.photo)
+					else holder.photo.setImageDrawable(dlPlaceholder)
 				}
 			})
 	}

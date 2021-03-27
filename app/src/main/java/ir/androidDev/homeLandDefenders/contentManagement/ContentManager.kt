@@ -24,6 +24,13 @@ open class ContentManager(private val context: Context) {
 	
 	/* cookie hash map */
 	companion object {
+		
+		/* current app version code */
+		const val APPLICATION_VERSION_CODE = 14
+		
+		/* POST header */
+		const val POST_HEADER = "application/x-www-form-urlencoded"
+		
 		/* the cookie needed to connect to server */
 		private var mCookie: String? = null
 		
@@ -34,11 +41,11 @@ open class ContentManager(private val context: Context) {
 					mWebView.settings.javaScriptEnabled = true
 					mWebView.webViewClient = object : WebViewClient() {
 						override fun onPageFinished(view: WebView?, url: String?) {
-							mCookie = CookieManager.getInstance().getCookie(Url.COOKIE_SERVER)
+							mCookie = CookieManager.getInstance().getCookie(Url.SERVER)
 							mWebView.destroy()
 						}
 					}
-					mWebView.loadUrl(Url.COOKIE_SERVER)
+					mWebView.loadUrl(Url.SERVER)
 				}
 			}
 			while (mCookie == null) continue

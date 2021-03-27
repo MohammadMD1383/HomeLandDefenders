@@ -34,6 +34,7 @@ class HomePageActivity : CustomizableActivity() {
 	private val comments = CommentsFragment()
 	private val sendContent = SendContentFragment()
 	private val contactUs = ContactUsFragment()
+	private val help = HelpFragment()
 //	private val aboutUs = AboutUsFragment()
 	
 	/* util object */
@@ -174,6 +175,11 @@ class HomePageActivity : CustomizableActivity() {
 			
 			R.id.item_nvg_drawer_repairContent -> {
 				repairContent()
+			}
+			
+			R.id.item_nvg_drawer_help -> {
+				showFragment(help)
+				setPageTitle(getString(R.string.drawer_string_help))
 			}
 		}
 		

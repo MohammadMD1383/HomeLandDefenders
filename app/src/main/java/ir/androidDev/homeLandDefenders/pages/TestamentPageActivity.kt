@@ -1,7 +1,7 @@
 package ir.androidDev.homeLandDefenders.pages
 
 import android.content.ContentValues
-import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -25,6 +25,19 @@ class TestamentPageActivity : CustomizableActivity() {
 	
 	/* database */
 	private val database = Database(this)
+	
+	/* auto download permission */
+	private var autoDownload = false
+	
+	/* image load state */
+	private var imageLoaded = false
+	
+	/* image url */
+	private lateinit var imageUrl: String
+	
+	/* placeholders */
+	private lateinit var placeholder: Drawable
+	private lateinit var dlPlaceholder: Drawable
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		/* force direction to RTL */
@@ -57,6 +70,22 @@ class TestamentPageActivity : CustomizableActivity() {
 			Toast.makeText(this, getString(R.string.save_state_string_saved), Toast.LENGTH_SHORT).show()
 		}
 		
+		/* download image by click */
+		if (!autoDownload) binding.ivTestamentPageActivityTopPhoto.setOnClickListener {
+			if (!imageLoaded) {
+				Picasso.get().load(imageUrl).centerInside().fit().placeholder(placeholder)
+					.into(binding.ivTestamentPageActivityTopPhoto, object : Callback {
+						override fun onSuccess() {
+							imageLoaded = true
+						}
+						
+						override fun onError(e: Exception?) {
+							binding.ivTestamentPageActivityTopPhoto.setImageDrawable(dlPlaceholder)
+						}
+					})
+			}
+		}
+		
 		/* on scroll hide/show fab */
 		var oldI = 0
 		binding.apbTestamentPageActivityAppBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, i ->
@@ -82,26 +111,31 @@ class TestamentPageActivity : CustomizableActivity() {
 		binding.tvTestamentPageActivityMainTv.text = cursor.getString(4)
 		
 		/* get permission for download */
-		val ad = database.getRowBy(Database.TBL_SETTINGS, "name", "auto_download").getInt(1) == 1
+		autoDownload = database.getRowBy(Database.TBL_SETTINGS, "name", "auto_download").getInt(1) == 1
 		
 		/* generate image url and placeholder */
-		val url = cursor.getString(3)
-		val placeholder = ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_photo_24, null)!!
+		imageUrl = cursor.getString(3)
+		placeholder = ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_photo_24, null)!!
+		dlPlaceholder = ResourcesCompat.getDrawable(resources, R.drawable.ic_round_arrow_circle_down_24, null)!!
 		
 		/* check if there is no photo then set the visibility to GONE */
-		if (url.contains("void(0)", true)) binding.frTestamentPageActivityImageContainer.visibility = View.GONE
+		if (imageUrl.contains("void(0)", true)) binding.frTestamentPageActivityImageContainer.visibility = View.GONE
 		
 		/* sets photo if cached else downloads it and then shows */
-		Picasso.get().load(url).centerInside().fit().networkPolicy(NetworkPolicy.OFFLINE).placeholder(placeholder)
+		Picasso.get().load(imageUrl).centerInside().fit().networkPolicy(NetworkPolicy.OFFLINE).placeholder(placeholder)
 			.into(binding.ivTestamentPageActivityTopPhoto, object : Callback {
-				override fun onSuccess() {}
+				override fun onSuccess() {
+					imageLoaded = true
+				}
+				
 				override fun onError(e: Exception?) {
-					if (ad)
-						Picasso.get().load(url).centerInside().fit().placeholder(placeholder)
-							.into(binding.ivTestamentPageActivityTopPhoto)
+					if (autoDownload) Picasso.get().load(imageUrl).centerInside().fit().placeholder(placeholder)
+						.into(binding.ivTestamentPageActivityTopPhoto)
+					else binding.ivTestamentPageActivityTopPhoto.setImageDrawable(dlPlaceholder)
 				}
 			})
 		
+		/* load scroll position if provided */
 		if (intent.hasExtra(TestamentActivity.SCROLL_P)) {
 			Handler(Looper.getMainLooper()).postDelayed({
 				binding.nsvTestamentPageActivityMainContainer.smoothScrollTo(0, intent.getIntExtra(TestamentActivity.SCROLL_P, 0), 1500)
