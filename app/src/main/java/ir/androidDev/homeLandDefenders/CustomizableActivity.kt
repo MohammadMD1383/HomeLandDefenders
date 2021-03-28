@@ -31,6 +31,7 @@ open class CustomizableActivity : AppCompatActivity() {
 				else -> R.style.AppTheme_FontFamily_iran_sans
 			}
 		)
+		cursor1.close()
 		
 		val cursor2 = database.getRowBy(Database.TBL_SETTINGS, "name", "font_size")
 		val fontSizes = resources.getStringArray(R.array.font_sizes)
@@ -46,5 +47,6 @@ open class CustomizableActivity : AppCompatActivity() {
 				else -> R.style.AppTheme_fontSize16
 			}
 		)
+		cursor2.close()
 	}
 }

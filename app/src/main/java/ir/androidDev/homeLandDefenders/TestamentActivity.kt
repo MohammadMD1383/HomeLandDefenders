@@ -90,13 +90,14 @@ class TestamentActivity : CustomizableActivity() {
 		
 		/* load last saved state */
 		binding.fabTestamentActivityLoadState.setOnClickListener {
-			val cursor = database.getRowBy(Database.TBL_SCROLL, "name", Database.TBL_TESTAMENT)
-			
-			startActivity(
-				Intent(this, TestamentPageActivity::class.java)
-					.putExtra(BIO_ID, cursor.getInt(1))
-					.putExtra(SCROLL_P, cursor.getInt(2))
-			)
+			with(database.getRowBy(Database.TBL_SCROLL, "name", Database.TBL_TESTAMENT)) {
+				startActivity(
+					Intent(this@TestamentActivity, TestamentPageActivity::class.java)
+						.putExtra(BIO_ID, getInt(1))
+						.putExtra(SCROLL_P, getInt(2))
+				)
+				close()
+			}
 		}
 		
 		/* setup the recycler view */
@@ -114,8 +115,7 @@ class TestamentActivity : CustomizableActivity() {
 	 * fixes the colors of texts and icons of search view
 	 */
 	private fun searchViewColorFix() {
-		val sac: SearchView.SearchAutoComplete =
-			binding.svTestamentActivitySearchView.findViewById(androidx.appcompat.R.id.search_src_text)
+		val sac: SearchView.SearchAutoComplete = binding.svTestamentActivitySearchView.findViewById(androidx.appcompat.R.id.search_src_text)
 		sac.setTextColor(Color.WHITE)
 		sac.setHintTextColor(Color.WHITE)
 	}
@@ -138,6 +138,8 @@ class TestamentActivity : CustomizableActivity() {
 		
 		val ad = database.getRowBy(Database.TBL_SETTINGS, "name", "auto_download")
 		autoDownload = ad.getInt(1) == 1
+		
+		cursor.close()
 	}
 	
 	/**
@@ -156,6 +158,8 @@ class TestamentActivity : CustomizableActivity() {
 				}
 			}
 		}
+		
+		cursor.close()
 	}
 	
 	/**

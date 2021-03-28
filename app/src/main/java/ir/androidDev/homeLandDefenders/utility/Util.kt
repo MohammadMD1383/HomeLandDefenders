@@ -14,7 +14,6 @@ import com.android.volley.toolbox.Volley
 import ir.androidDev.homeLandDefenders.R
 import ir.androidDev.homeLandDefenders.contentManagement.ContentManager
 
-
 class Util(private val context: Context) {
 	/**
 	 * makes a progress dialog and returns it
@@ -23,11 +22,11 @@ class Util(private val context: Context) {
 	 * @param cancellable the cancellable status of dialog by click outside it
 	 */
 	fun makeProgressDialog(message: String, cancellable: Boolean): ProgressDialog {
-		val pd = ProgressDialog(context)
-		pd.setMessage(message)
-		pd.setCancelable(cancellable)
-		pd.show()
-		return pd
+		return ProgressDialog(context).apply {
+			setMessage(message)
+			setCancelable(cancellable)
+			show()
+		}
 	}
 	
 	/**
@@ -42,22 +41,24 @@ class Util(private val context: Context) {
 	 * @param doWithGivenValue the call back that contains the input value
 	 */
 	fun makePromptDialog(title: String, message: String, cancellable: Boolean, maxInputLength: Int, doWithGivenValue: (s: String) -> Unit) {
-		val alert: AlertDialog.Builder = AlertDialog.Builder(context)
+		val alert: AlertDialog.Builder = AlertDialog.Builder(context).apply {
+			setTitle(title)
+			setMessage(message)
+		}
 		
-		alert.setTitle(title)
-		alert.setMessage(message)
+		val input = EditText(context).apply {
+			gravity = Gravity.CENTER
+			setLines(1)
+			maxLines = 1
+			isSingleLine = true
+			filters = arrayOf<InputFilter>(LengthFilter(maxInputLength))
+		}
 		
-		val input = EditText(context)
-		input.gravity = Gravity.CENTER
-		input.setLines(1)
-		input.maxLines = 1
-		input.isSingleLine = true
-		input.filters = arrayOf<InputFilter>(LengthFilter(maxInputLength))
-		alert.setView(input)
-		
-		alert.setPositiveButton(context.getString(R.string.util_dialog_positive_button), null)
-		
-		alert.setCancelable(cancellable)
+		alert.apply {
+			setView(input)
+			setPositiveButton(context.getString(R.string.util_dialog_positive_button), null)
+			setCancelable(cancellable)
+		}
 		
 		val a: AlertDialog = alert.create()
 		a.show()
@@ -82,14 +83,12 @@ class Util(private val context: Context) {
 	 * @param onDismiss the callback
 	 */
 	fun makeAlertDialog(title: String, message: String, cancellable: Boolean, onDismiss: () -> Unit) {
-		val alert: AlertDialog.Builder = AlertDialog.Builder(context)
-		
-		alert.setTitle(title)
-		alert.setMessage(message)
-		
-		alert.setPositiveButton(context.getString(R.string.util_dialog_positive_button)) { _, _ -> onDismiss() }
-		
-		alert.setCancelable(cancellable)
+		val alert: AlertDialog.Builder = AlertDialog.Builder(context).apply {
+			setTitle(title)
+			setMessage(message)
+			setPositiveButton(context.getString(R.string.util_dialog_positive_button)) { _, _ -> onDismiss() }
+			setCancelable(cancellable)
+		}
 		
 		val a: AlertDialog = alert.create()
 		a.show()
@@ -106,15 +105,13 @@ class Util(private val context: Context) {
 	 * @param onConfirm the callback called on positive button click
 	 */
 	fun makeAlertDialog(title: String, message: String, cancellable: Boolean, onConfirm: () -> Unit, onDismiss: () -> Unit) {
-		val alert: AlertDialog.Builder = AlertDialog.Builder(context)
-		
-		alert.setTitle(title)
-		alert.setMessage(message)
-		
-		alert.setPositiveButton(context.getString(R.string.util_dialog_positive_button)) { _, _ -> onConfirm() }
-		alert.setNegativeButton(context.getString(R.string.util_dialog_negative_button)) { _, _ -> onDismiss() }
-		
-		alert.setCancelable(cancellable)
+		val alert: AlertDialog.Builder = AlertDialog.Builder(context).apply {
+			setTitle(title)
+			setMessage(message)
+			setPositiveButton(context.getString(R.string.util_dialog_positive_button)) { _, _ -> onConfirm() }
+			setNegativeButton(context.getString(R.string.util_dialog_negative_button)) { _, _ -> onDismiss() }
+			setCancelable(cancellable)
+		}
 		
 		val a: AlertDialog = alert.create()
 		a.show()

@@ -10,8 +10,8 @@ android {
         applicationId "ir.androidDev.HomeLandDefenders"
         minSdkVersion 17
         targetSdkVersion 30
-        versionCode 14
-        versionName "1.5.40"
+        versionCode 15
+        versionName "1.5.42"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true

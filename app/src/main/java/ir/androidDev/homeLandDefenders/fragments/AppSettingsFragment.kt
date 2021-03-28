@@ -74,10 +74,9 @@ class AppSettingsFragment : Fragment() {
 	private fun loadSettings(db: Database) {
 		val cursor1 = db.getRowBy(Database.TBL_SETTINGS, "name", "nick_name")
 		binding!!.editTextTextPersonName.setText(cursor1.getString(1))
+		cursor1.close()
 		
 		val cursor2 = db.getRowBy(Database.TBL_SETTINGS, "name", "font_family")
-		val cursor3 = db.getRowBy(Database.TBL_SETTINGS, "name", "font_size")
-		
 		val fontFamilies = resources.getStringArray(R.array.font_names)
 		
 		binding!!.spinAppSettingsFragmentFontSpinner.setSelection(
@@ -90,7 +89,9 @@ class AppSettingsFragment : Fragment() {
 				else -> 0
 			}
 		)
+		cursor2.close()
 		
+		val cursor3 = db.getRowBy(Database.TBL_SETTINGS, "name", "font_size")
 		val fontSizes = resources.getStringArray(R.array.font_sizes)
 		
 		binding!!.spinAppSettingsFragmentFontSizeSpinner.setSelection(
@@ -104,15 +105,19 @@ class AppSettingsFragment : Fragment() {
 				else -> 1
 			}
 		)
+		cursor3.close()
 		
 		val cursor4 = db.getRowBy(Database.TBL_SETTINGS, "name", "auto_download")
 		if (cursor4.getInt(1) == 0) binding!!.schAppSettingsFragmentAutoDownload.isChecked = false
+		cursor4.close()
 		
 		val cursor5 = db.getRowBy(Database.TBL_SETTINGS, "name", "app_update")
 		if (cursor5.getInt(1) == 0) binding!!.schAppSettingsFragmentAppUpdate.isChecked = false
+		cursor5.close()
 		
 		val cursor6 = db.getRowBy(Database.TBL_SETTINGS, "name", "new_data")
 		if (cursor6.getInt(1) == 0) binding!!.schAppSettingsFragmentNewData.isChecked = false
+		cursor6.close()
 	}
 	
 	/**
@@ -132,8 +137,7 @@ class AppSettingsFragment : Fragment() {
 	private fun setOnSaveClickListener(db: Database) {
 		binding!!.fabAppSettingsFragmentSave.setOnClickListener {
 			if (binding!!.editTextTextPersonName.text.trim().isEmpty()) {
-				Toast.makeText(activity!!.applicationContext, getString(R.string.app_settings_string_please_fill_nick_name), Toast.LENGTH_SHORT)
-					.show()
+				Toast.makeText(activity!!.applicationContext, getString(R.string.app_settings_string_please_fill_nick_name), Toast.LENGTH_SHORT).show()
 				return@setOnClickListener
 			}
 			
@@ -164,10 +168,5 @@ class AppSettingsFragment : Fragment() {
 				false
 			) { exitProcess(0) }
 		}
-	}
-	
-	override fun onDestroyView() {
-		super.onDestroyView()
-		binding = null
 	}
 }

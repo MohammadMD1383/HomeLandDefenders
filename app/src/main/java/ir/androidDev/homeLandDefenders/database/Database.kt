@@ -119,7 +119,7 @@ class Database(context: Context?) : SQLiteOpenHelper(context, "hld.db", null, 2)
 	 * @param cv the values to insert same as table columns
 	 */
 	fun insert(tName: String, cv: ContentValues) {
-		val db: SQLiteDatabase = this.writableDatabase
+		val db: SQLiteDatabase = writableDatabase
 		db.insert(tName, null, cv)
 	}
 	
@@ -132,7 +132,7 @@ class Database(context: Context?) : SQLiteOpenHelper(context, "hld.db", null, 2)
 	 * @param equalTo defines the value of [where]
 	 */
 	fun updateBy(tName: String, cv: ContentValues, where: String, equalTo: Any) {
-		val db: SQLiteDatabase = this.writableDatabase
+		val db: SQLiteDatabase = writableDatabase
 		db.update(tName, cv, "$where='$equalTo'", null)
 	}
 	

@@ -86,18 +86,15 @@ class CommentsFragment : Fragment() {
 	 * {e.g PHP} $_POST['comment'] = THE COMMENT
 	 */
 	private fun createDataMap(): MutableMap<String, String> {
-		val userName = Database(context).getRowBy(Database.TBL_SETTINGS, "name", "nick_name").getString(1)
+		val cursor = Database(context).getRowBy(Database.TBL_SETTINGS, "name", "nick_name")
+		val nickname = cursor.getString(1)
+		cursor.close()
 		
 		val map: MutableMap<String, String> = HashMap()
 		
-		map["user"] = userName
+		map["user"] = nickname
 		map["comment"] = binding!!.etCommentsFragmentComment.text.toString().trim()
 		
 		return map
-	}
-	
-	override fun onDestroyView() {
-		super.onDestroyView()
-		binding = null
 	}
 }

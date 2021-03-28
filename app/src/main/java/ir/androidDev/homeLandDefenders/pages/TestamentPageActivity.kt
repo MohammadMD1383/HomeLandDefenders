@@ -111,10 +111,14 @@ class TestamentPageActivity : CustomizableActivity() {
 		binding.tvTestamentPageActivityMainTv.text = cursor.getString(4)
 		
 		/* get permission for download */
-		autoDownload = database.getRowBy(Database.TBL_SETTINGS, "name", "auto_download").getInt(1) == 1
+		val cursorAd = database.getRowBy(Database.TBL_SETTINGS, "name", "auto_download")
+		autoDownload = cursorAd.getInt(1) == 1
+		cursorAd.close()
 		
 		/* generate image url and placeholder */
 		imageUrl = cursor.getString(3)
+		cursor.close()
+		
 		placeholder = ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_photo_24, null)!!
 		dlPlaceholder = ResourcesCompat.getDrawable(resources, R.drawable.ic_round_arrow_circle_down_24, null)!!
 		

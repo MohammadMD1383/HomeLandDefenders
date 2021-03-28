@@ -92,7 +92,7 @@ class NewContent(private val context: Context) : ContentManager(context) {
 				@Throws(AuthFailureError::class)
 				override fun getHeaders(): MutableMap<String, String> {
 					val params: MutableMap<String, String> = HashMap()
-					params["Content-Type"] = ContentManager.POST_HEADER
+					params["Content-Type"] = POST_HEADER
 					params.putAll(getCookie(context))
 					return params
 				}

@@ -26,7 +26,7 @@ open class ContentManager(private val context: Context) {
 	companion object {
 		
 		/* current app version code */
-		const val APPLICATION_VERSION_CODE = 14
+		const val APPLICATION_VERSION_CODE = 15
 		
 		/* POST header */
 		const val POST_HEADER = "application/x-www-form-urlencoded"
@@ -76,7 +76,10 @@ open class ContentManager(private val context: Context) {
 	 */
 	fun checkContents(onCheckFinished: (cm: ContentManager) -> Unit) {
 		/* get nick name from user */
-		if (database.getRowBy(Database.TBL_SETTINGS, "name", "nick_name").getStringOrNull(1) == null) {
+		val cursor = database.getRowBy(Database.TBL_SETTINGS, "name", "nick_name")
+		val nickname = cursor.getStringOrNull(1)
+		cursor.close()
+		if (nickname == null) {
 			util.makePromptDialog(
 				context.getString(R.string.app_settings_string_nick_name),
 				context.getString(R.string.app_settings_string_please_choose_nick_name),

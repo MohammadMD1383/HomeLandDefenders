@@ -65,9 +65,4 @@ class HelpFragment : Fragment() {
 		adapter = HelpItemAdapter(context!!, helpItems)
 		binding!!.rvHelpFragmentRecyclerView.adapter = adapter
 	}
-	
-	override fun onDestroyView() {
-		super.onDestroyView()
-		binding = null
-	}
 }

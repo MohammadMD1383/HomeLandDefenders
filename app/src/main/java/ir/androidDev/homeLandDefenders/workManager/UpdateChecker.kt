@@ -51,10 +51,16 @@ class UpdateChecker(private val context: Context, workerParameters: WorkerParame
 		registerNotificationChannel()
 		
 		/* check if allowed then check for application newer version availability */
-		if (database.getRowBy(Database.TBL_SETTINGS, "name", "app_update").getInt(1) == 1) checkForAppUpdate()
+		with(database.getRowBy(Database.TBL_SETTINGS, "name", "app_update")) {
+			if (getInt(1) == 1) checkForAppUpdate()
+			close()
+		}
 		
 		/* check if allowed then check for new content availability */
-		if (database.getRowBy(Database.TBL_SETTINGS, "name", "new_data").getInt(1) == 1) checkForNewData()
+		with(database.getRowBy(Database.TBL_SETTINGS, "name", "new_data")) {
+			if (getInt(1) == 1) checkForNewData()
+			close()
+		}
 		
 		return Result.success()
 	}

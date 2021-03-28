@@ -17,7 +17,7 @@ import ir.androidDev.homeLandDefenders.dataModels.OperationItem
 import ir.androidDev.homeLandDefenders.databinding.RecyclerItemOperationCardBinding
 
 class OperationItemAdapter(
-	private val context: Context,
+	context: Context,
 	private val operationItems: MutableList<OperationItem>,
 	private val canDownloadPhoto: Boolean,
 	private val onViewClick: (id: Int) -> Unit

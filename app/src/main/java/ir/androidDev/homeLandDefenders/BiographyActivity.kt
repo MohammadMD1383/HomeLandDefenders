@@ -90,13 +90,14 @@ class BiographyActivity : CustomizableActivity() {
 		
 		/* load last saved state */
 		binding.fabBiographyActivityLoadState.setOnClickListener {
-			val cursor = database.getRowBy(Database.TBL_SCROLL, "name", Database.TBL_BIOGRAPHY)
-			
-			startActivity(
-				Intent(this, BiographyPageActivity::class.java)
-					.putExtra(BIO_ID, cursor.getInt(1))
-					.putExtra(SCROLL_P, cursor.getInt(2))
-			)
+			with(database.getRowBy(Database.TBL_SCROLL, "name", Database.TBL_BIOGRAPHY)) {
+				startActivity(
+					Intent(this@BiographyActivity, BiographyPageActivity::class.java)
+						.putExtra(BIO_ID, getInt(1))
+						.putExtra(SCROLL_P, getInt(2))
+				)
+				close()
+			}
 		}
 		
 		/* setup the recycler view */
@@ -139,6 +140,8 @@ class BiographyActivity : CustomizableActivity() {
 		
 		val ad = database.getRowBy(Database.TBL_SETTINGS, "name", "auto_download")
 		autoDownload = ad.getInt(1) == 1
+		
+		cursor.close()
 	}
 	
 	/**
@@ -158,6 +161,8 @@ class BiographyActivity : CustomizableActivity() {
 				}
 			}
 		}
+		
+		cursor.close()
 	}
 	
 	/**

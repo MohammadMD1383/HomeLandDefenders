@@ -42,9 +42,4 @@ class ContactUsFragment : Fragment() {
 	private fun openLink(link: String) {
 		startActivity(Intent(Intent.ACTION_VIEW).setData(Uri.parse(link)))
 	}
-	
-	override fun onDestroyView() {
-		super.onDestroyView()
-		binding = null
-	}
 }

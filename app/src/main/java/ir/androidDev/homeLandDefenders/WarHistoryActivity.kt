@@ -91,7 +91,9 @@ class WarHistoryActivity : CustomizableActivity() {
 	 * loads the auto download permission from database
 	 */
 	private fun loadPreferences() {
-		autoDownload = database.getRowBy(Database.TBL_SETTINGS, "name", "auto_download").getInt(1) == 1
+		val cursor = database.getRowBy(Database.TBL_SETTINGS, "name", "auto_download")
+		autoDownload = cursor.getInt(1) == 1
+		cursor.close()
 	}
 	
 	/**
@@ -107,7 +109,9 @@ class WarHistoryActivity : CustomizableActivity() {
 	 * gathers the scroll state
 	 */
 	private fun gatherScrollState() {
-		val scrollPos = database.getRowBy(Database.TBL_SCROLL, "name", Database.WAR_HISTORY).getIntOrNull(2)
+		val cursor = database.getRowBy(Database.TBL_SCROLL, "name", Database.WAR_HISTORY)
+		val scrollPos = cursor.getIntOrNull(2)
+		cursor.close()
 		
 		if (scrollPos == null) binding.ivWarHistoryActivityLoadState.visibility = View.GONE else lastScroll = scrollPos
 	}
@@ -145,7 +149,7 @@ class WarHistoryActivity : CustomizableActivity() {
 				
 				warHistoryParts.add(warHistoryPart)
 			}
-			adapter!!.notifyDataSetChanged()
+			adapter!!.notifyItemRangeInserted(0, warHistoryParts.size)
 			loaders(prb = false, ref = false)
 		}, {
 			Toast.makeText(this, getString(R.string.json_download_volley_fail_string), Toast.LENGTH_SHORT).show()
