@@ -4,9 +4,33 @@ import android.app.Application
 import androidx.work.*
 import com.squareup.picasso.Picasso
 import ir.androidDev.homeLandDefenders.workManager.UpdateChecker
+import java.io.File
+import java.io.FileOutputStream
 import java.util.concurrent.TimeUnit
 
-open class WorkRegisterer : Application() {
+open class DatabaseEmbedder : Application() {
+	override fun onCreate() {
+		super.onCreate()
+		
+		val dbFile = getDatabasePath("hld.db")
+		if (!dbFile.exists()) {
+			val inStream = assets.open("hld.db")
+			val outStream = FileOutputStream(dbFile)
+			
+			var byte: Int
+			while (true) {
+				byte = inStream.read()
+				if (byte == -1) break
+				outStream.write(byte)
+			}
+			
+			inStream.close()
+			outStream.close()
+		}
+	}
+}
+
+open class WorkRegisterer : DatabaseEmbedder() {
 	
 	companion object {
 		const val APP_UPDATE_CHECKER = "ApplicationUpdateChecker"
